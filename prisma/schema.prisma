@@ -12,10 +12,7 @@ datasource db {
 
 model PersonalInfo {
   id              String       @id @default(uuid()) // personalinfo
-  firstName       String 
-  lastName        String
-  email           String     
-  passwordHash    String
+  
   phone           String?
   address         String?
   resume          String?    // This could be a URL to a hosted resume
@@ -28,7 +25,7 @@ model PersonalInfo {
   updatedAt       DateTime   @updatedAt
  //EXTERNAL MODEL
   applicantId    String
-  applicant       Applicant  @relation(fields: [id], references: [id])
+  applicant       Applicant  @relation(fields: [applicantId], references: [id])
 }
 
 model Education {
@@ -44,10 +41,16 @@ model Education {
 
 model Applicant{
   id String @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String
+  passwordHash String
+  collegeId String
+  
   
   personalInfos PersonalInfo[]
   applications JobApplication[]
-  college College[]
+ 
   educations Education[]
 }
 
@@ -56,8 +59,7 @@ model College {
   name       String
   location   String
  
-  applicantId String
-  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  
   jobs       Job[]
 }
 
@@ -112,4 +114,3 @@ model JobApplication {
   job         Job      @relation(fields: [jobId], references: [id])
   applicant   Applicant @relation(fields: [applicantId], references: [id])
 }
-
