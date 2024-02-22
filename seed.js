@@ -7,16 +7,21 @@ async function main() {
     const newApplicant = await prisma.applicant.create({
         data: {
           id: uuidv4(), // Generate a new UUI
+          firstName: "Vishnu",
+          lastName: "Variyar",
+          email: `VishnuVariyar${uuidv4()}@example.com`,
+          passwordHash: "hashedpassword",
+          collegeId: "123", // Generate a new UUID
        
                   },
       });
 
   const newCollege = await prisma.college.create({
     data: {
-      id: uuidv4(),
+      id: "123",
       name: "Goa College of Engineering",
       location: "Goa, India",
-      applicantId: newApplicant.id,
+      
     },
   });
 
@@ -54,10 +59,7 @@ async function main() {
   const newPersonalInfo = await prisma.personalInfo.create({
     data: {
       id: newApplicant.id, // Use the same UUID
-      firstName: "Shrey",
-      lastName: "Variyar",
-      email: `VishnuVariyar${uuidv4()}@example.com`,
-      passwordHash: "hashedpassword",
+      
       phone: "8265010448",
       address: "123 Street, City, Country",
       resume: "http://example.com/resume.pdf",
