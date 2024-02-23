@@ -3,6 +3,7 @@ import {PrismaClient} from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import validator from 'validator';
 const prisma = new PrismaClient();
 
 export const GET = async (req, res) => {
@@ -29,8 +30,13 @@ export const GET = async (req, res) => {
 
 export const POST = async (req, res) => {
     try {
-      const { firstName, lastName, email, password,collegeId, personalInfos, college, educations } = await req.json();
+      const { firstName, lastName, email, password,collegeId, personalInfos, educations } = await req.json();
       const passwordHash = await bcrypt.hash(password, 10);
+
+      const existingApplicant = await prisma.applicant.findUnique({
+        where: {email},
+      })
+      
   
       const applicant = await prisma.applicant.create({
         data: {
@@ -50,7 +56,8 @@ export const POST = async (req, res) => {
       });
   
       
-  
+      
+      //education requiers applicant id 
       const educationRecords = await Promise.all(
         educations.map((education) =>
           prisma.education.create({
@@ -62,20 +69,13 @@ export const POST = async (req, res) => {
         )
       );
 
-      const token = jwt.sign({firstName, lastName, email, collegeId}, process.env.JWT_SECRET, {expiresIn: '1h'})
       
+     
   
       const response = NextResponse.json({ message: "success", applicant, personalInfo, educations: educationRecords });
-     response.cookies.set(
-        {
-            name: "auth",
-            value: token,
-            maxAge: 60*60,
-            httpOnly: true,
-            path: '/',
-        }
-     )
-     console.log("cookies", response.cookies);
+    
+
+     
       
      return response;
     } catch (err) {
