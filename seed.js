@@ -38,6 +38,7 @@ async function main() {
       id: uuidv4(),
       name: "Rohit Gupta",
       email: `Rohit${uuidv4()}@example.com`,
+      password: "hashedpassword",
       companyId: newCompany.id,
     },
   });
@@ -49,6 +50,7 @@ async function main() {
       description: "We are looking for a QA Engineer to join our team!",
       companyId: newCompany.id,
       collegeId: newCollege.id,
+      employerId: newEmployer.id,
       type: 'FULL_TIME', // Add the job type
       skills: ['Skill1', 'Skill2'], // Add the skills needed
     },

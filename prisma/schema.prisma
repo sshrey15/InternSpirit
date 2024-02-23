@@ -11,106 +11,105 @@ datasource db {
 }
 
 model PersonalInfo {
-  id              String       @id @default(uuid()) // personalinfo
-  
+  id String @id @default(uuid()) // personalinfo
+
   phone           String?
   address         String?
-  resume          String?    // This could be a URL to a hosted resume
-  linkedIn        String?    // LinkedIn profile URL
-  github          String?    // GitHub profile URL
-  portfolio       String?    // Portfolio website URL
-  skills          String[]   // Array of skills
-  experienceYears Int        // Years of experience
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
- //EXTERNAL MODEL
-  applicantId    String
-  applicant       Applicant  @relation(fields: [applicantId], references: [id])
+  resume          String? // This could be a URL to a hosted resume
+  linkedIn        String? // LinkedIn profile URL
+  github          String? // GitHub profile URL
+  portfolio       String? // Portfolio website URL
+  skills          String[] // Array of skills
+  experienceYears Int // Years of experience
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  //EXTERNAL MODEL
+  applicantId     String
+  applicant       Applicant @relation(fields: [applicantId], references: [id])
 }
 
 model Education {
   id          String    @id @default(uuid())
-  level       String   // e.g., "10th", "12th", "College"
-  field       String   // e.g., "Science", "Arts", "Computer Science"
-  institution String   // e.g., "XYZ High School", "ABC University"
-  year        Int      // Year of completion
+  level       String // e.g., "10th", "12th", "College"
+  field       String // e.g., "Science", "Arts", "Computer Science"
+  institution String // e.g., "XYZ High School", "ABC University"
+  year        Int // Year of completion
   applicantId String
   applicant   Applicant @relation(fields: [applicantId], references: [id])
 }
 
-
-model Applicant{
-  id String @id @default(uuid())
-  firstName String
-  lastName  String
-  email     String @unique
+model Applicant {
+  id           String @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String @unique
   passwordHash String
-  collegeId String
-  
-  
+  collegeId    String
+
   personalInfos PersonalInfo[]
-  applications JobApplication[]
- 
+  applications  JobApplication[]
+
   educations Education[]
 }
 
 model College {
-  id         String      @id @default(uuid())
-  name       String
-  location   String
- 
-  
-  jobs       Job[]
+  id       String @id @default(uuid())
+  name     String
+  location String
+
+  jobs Job[]
 }
 
 model Employer {
-  id        String    @id @default(uuid())
+  id        String  @id @default(uuid())
   name      String
-  email     String   
+  email     String @unique
+  password  String
+
   companyId String
-  company   Company  @relation(fields: [companyId], references: [id])
+  company   Company @relation(fields: [companyId], references: [id])
   jobs      Job[]
 }
 
 model Company {
-  id       String    @id @default(uuid())
-  name     String
-  location String
+  id        String     @id @default(uuid())
+  name      String
+  location  String
   employers Employer[]
-  jobs     Job[]
+  jobs      Job[]
 }
 
-enum JobType{
+enum JobType {
   FULL_TIME
   PART_TIME
   CONTRACT
   INTERNSHIP
   TEMPORARY
   REMOTE
-
 }
 
 model Job {
-  id          String     @id @default(uuid())
-  title       String
-  description String
-  postedAt    DateTime @default(now())
-  companyId   String
-  company     Company  @relation(fields: [companyId], references: [id])
+  id           String           @id @default(uuid())
+  title        String
+  description  String
+  postedAt     DateTime         @default(now())
+  companyId    String
+  company      Company          @relation(fields: [companyId], references: [id])
   applications JobApplication[]
-  collegeId   String
-  college      College  @relation(fields: [collegeId], references: [id])
-  employer    Employer[]
-  type        JobType
-  skills     String[]
+  collegeId    String
+  college      College          @relation(fields: [collegeId], references: [id])
+  employerId String
+  employer  Employer @relation(fields: [employerId], references: [id])
+  type         JobType
+  skills       String[]
 }
 
 model JobApplication {
-  id          String     @id @default(uuid())
+  id          String    @id @default(uuid())
   jobId       String
   applicantId String
   status      String
-  appliedAt   DateTime @default(now())
-  job         Job      @relation(fields: [jobId], references: [id])
+  appliedAt   DateTime  @default(now())
+  job         Job       @relation(fields: [jobId], references: [id])
   applicant   Applicant @relation(fields: [applicantId], references: [id])
 }
