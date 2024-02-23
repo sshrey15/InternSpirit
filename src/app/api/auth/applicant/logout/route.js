@@ -5,7 +5,7 @@ export const GET = async (req, res) => {
   try {
     const response = NextResponse.json({ message: "token empty", token: "" });
     response.cookies.set({
-      name: "token",
+      name: "applicantCookie",
       value: "",
       options: {
         httpOnly: true,

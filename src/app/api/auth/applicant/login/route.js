@@ -38,11 +38,10 @@ export const POST = async (req, res) => {
     // Return the JWT in the response
     const response = NextResponse.json({ message: "success", token });
     response.cookies.set({
-      name: "token",
+      name: "applicantCookie",
       value: token,
       options: {
         httpOnly: true,
-        secure: true,
         sameSite: "strict",
         maxAge: 60 * 60, // 1 hour
         path: "/",
