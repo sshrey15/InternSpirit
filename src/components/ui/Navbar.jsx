@@ -21,7 +21,7 @@ const Navbar = () => {
                 </div>
                 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                     <div className="flex-shrink-0 flex items-center">
-                        <h1 className="flex font-bold text-blue-300">Placement<p className="text-gray-900">Pakka.com</p></h1>
+                        <h1 className="flex underline font-bold text-blue-300">Placement<p className="text-gray-600">pakka.com</p></h1>
 
                     </div>
                     <div className="hidden sm:block sm:ml-6">
