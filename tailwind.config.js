@@ -38,6 +38,18 @@ module.exports = {
           '100%': { transform: 'scale(1)' },
           
         },
+        "fadeIn": { // Changed "fade-in" to "fadeIn"
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        "fadeOut": { // Changed "fade-out" to "fadeOut"
+          from: { opacity: "1" },
+          to: { opacity: "0" },
+        },
+        "marquee": {
+          "0%": { transform: "translate(0, 0)" },
+          "100%": { transform: "translate(-50%, 0)" },
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -48,6 +60,9 @@ module.exports = {
         'PopOut-4': 'PopOut 2s ease-in-out 4s  1',
         'PopOut-5': 'PopOut 2s ease-in-out 5s 1',
         'PopOut-6': 'PopOut 2s ease-in-out 6s 1',
+        'fadeIn': 'fadeIn 2s ease-in forwards',
+        'fadeOut': 'fadeOut 2s ease-in forwards',
+        'marquee': 'marquee 10s linear infinite',
       },
     },
   },
