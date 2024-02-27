@@ -2,8 +2,16 @@ import { NextResponse, NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 import validator from "validator";
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
 
 const prisma = new PrismaClient();
 
@@ -11,7 +19,7 @@ export const POST = async (req, res) => {
   try {
     const { firstName, lastName, email, password, collegeId } =
       await req.json();
-
+    console.log(firstName, lastName, email, password, collegeId);
     if (!validator.isEmail(email)) {
       return NextResponse.json({ message: "Invalid email" });
     }
@@ -20,6 +28,22 @@ export const POST = async (req, res) => {
         message: "Password must be at least 8 characters long",
       });
     }
+
+    let mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: "Welcome to CollegeRecruiter",
+      text: `Welcome to CollegeRecruiter, ${firstName}!`,
+    };
+
+    transporter.sendMail(mailOptions, function (err, info) {
+      if (err) {
+        console.log(err);
+        return NextResponse.json({ message: "error", err: err.message });
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
 
     const passwordHash = await bcrypt.hash(password, 10);
 

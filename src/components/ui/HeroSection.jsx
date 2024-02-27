@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import useFetchImage from '../../hooks/imageChange'; // Adjust this path based on your project structure
 import Link from 'next/link';
 import Marquee from "react-marquee-slider";
 import times from "lodash/times";
@@ -16,7 +15,7 @@ const data = [
     { title: 'Team Work', animation: 'animate-PopOut-1' },
     { title: 'Work Remotely', animation: 'animate-PopOut-2' },
     { title: 'Team Work', animation: 'animate-PopOut-3' },
-   
+
 ];
 
 
@@ -31,20 +30,14 @@ const HeroSection = () => {
         '/logos/cho.png',
         '/logos/damo4.png',
     ];
-
     const comp = [
         '/images/comp1.png',
         '/images/comp2.png',
         '/images/comp3.jpg',
         '/images/comp4.jpeg',
         '/images/comp5.png',
-
     ]
-    const images = [
-        '/images/bg4.png',
-        '/images/bg5.jpg',
-        '/images/bg6.jpeg',
-    ];
+
     const [isClient, setIsClient] = useState(false);
 
     const [activeIndex, setActiveIndex] = useState(0);
@@ -58,7 +51,7 @@ const HeroSection = () => {
         return () => clearInterval(interval);
     }, [totalItems]);
 
-    const currentImage = useFetchImage(images);
+
     useEffect(() => {
         setIsClient(true);
     }, []);
@@ -94,9 +87,9 @@ const HeroSection = () => {
             <section className="relative flex opacity-50 items-center justify-center h-screen">
                 <div className="absolute inset-0 z-10 bg-white opacity-50"></div>
                 <div className="absolute inset-0 z-0">
-                  
+
                 </div>
-                </section>
+            </section>
 
 
 
@@ -104,7 +97,12 @@ const HeroSection = () => {
 
             <section className="flex flex-col items-center  p-10 space-y-10 relative">
 
-                <div className="absolute h-full w-px font-bold bg-blue-500 left-1/2 -mt-10"></div>
+
+                <div className="absolute h-full w-px font-bold bg-blue-500 left-1/2 -mt-10">
+
+                </div>
+
+
 
                 <Zoom>
                     <div className="step items-center text-center grid grid-cols-2">
@@ -141,9 +139,9 @@ const HeroSection = () => {
 
             <section id="jobs" className="bg-blue-50 md:p-10 p-5 place-content-center">
                 <div className='relative'>
-                <h2 className="text-7xl text-center font-extrabold  opacity-50 m-4 text-blue-200 mb-2 relative">Latest Internships
-                </h2>
-                <p className="font-bold z-10  font-mono underline opacity-70 cursor-pointer    text-gray-900 absolute inset-0 flex items-center text-2xl justify-center">Apply now </p>
+                    <h2 className="text-7xl text-center font-extrabold  opacity-50 m-4 text-blue-200 mb-2 relative">Latest Internships
+                    </h2>
+                    <p className="font-bold z-10  font-mono underline opacity-70 cursor-pointer    text-gray-900 absolute inset-0 flex items-center text-2xl justify-center">Apply now </p>
                 </div>
                 <div className="container mx-auto flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-16">
                     <div className="md:w-full grid grid-cols-1 p-6 md:p-20 -mt-10 md:grid-cols-3 gap-8">
@@ -163,14 +161,14 @@ const HeroSection = () => {
 
             <section ref={ref} className="p-20">
                 <div className='relative'>
-                <h2 className="text-7xl opacity-10 text-center font-bold mb-10 text-gray-800">Our Numbers</h2>
-                <p className="font-bold z-10  font-mono underline opacity-70    text-gray-900 absolute inset-0 flex items-center text-2xl justify-center">We are growing</p>
+                    <h2 className="text-7xl opacity-10 text-center font-bold mb-10 text-gray-800">Our Numbers</h2>
+                    <p className="font-bold z-10  font-mono underline opacity-70    text-gray-900 absolute inset-0 flex items-center text-2xl justify-center">We are growing</p>
 
                 </div>
                 <div className="flex justify-around content-center">
-               
+
                     <div >
-                    
+
 
                         <VisibilitySensor>
                             {({ isVisible }) => (
@@ -205,37 +203,37 @@ const HeroSection = () => {
             </section>
 
             <section id="jobs" className=" bg-blue-50 md:pl-60 md:pr-60 p-5  flex flex-col ">
-            <div className='relative -mt-5  '>
-                <h2 className="text-7xl text-center font-extrabold  opacity-50 m-4 text-blue-200 mb-2 relative">Our Partners
-                </h2>
-                <p className="font-bold z-10  font-mono underline opacity-70 cursor-pointer    text-gray-900 absolute inset-0 flex items-center text-2xl justify-center">they trust us </p>
+                <div className='relative -mt-5  '>
+                    <h2 className="text-7xl text-center font-extrabold  opacity-50 m-4 text-blue-200 mb-2 relative">Our Partners
+                    </h2>
+                    <p className="font-bold z-10  font-mono underline opacity-70 cursor-pointer    text-gray-900 absolute inset-0 flex items-center text-2xl justify-center">they trust us </p>
                 </div>
                 <div className='mt-10'>
-                {isClient && (
-                    <Marquee velocity={50}>
-                        {times(logos.length, Number).map(id => (
-                            <div key={`marquee-example-${id}`} style={{ width: "200px", marginRight: "40px" }} className="flex items-center justify-center">
-                                <Image src={logos[id]} alt={`Logo ${id + 1}`} width={100} height={100} />
-                            </div>
-                        ))}
-                    </Marquee>
+                    {isClient && (
+                        <Marquee velocity={50}>
+                            {times(logos.length, Number).map(id => (
+                                <div key={`marquee-example-${id}`} style={{ width: "200px", marginRight: "40px" }} className="flex items-center justify-center">
+                                    <Image src={logos[id]} alt={`Logo ${id + 1}`} width={100} height={100} />
+                                </div>
+                            ))}
+                        </Marquee>
 
 
-                )}
-                </div>  
+                    )}
+                </div>
                 <div className='mt-10'>
-                {isClient && (
-                    <Marquee velocity={90} direction='right'>
-                        {times(comp.length, Number).map(id => (
-                            <div key={`marquee-example-${id}`} style={{ width: "200px", marginRight: "40px" }} className="flex items-center justify-center">
-                                <Image src={comp[id]} alt={`Logo ${id + 1}`} width={100} height={100} />
-                            </div>
-                        ))}
-                    </Marquee>
+                    {isClient && (
+                        <Marquee velocity={90} direction='right'>
+                            {times(comp.length, Number).map(id => (
+                                <div key={`marquee-example-${id}`} style={{ width: "200px", marginRight: "40px" }} className="flex items-center justify-center">
+                                    <Image src={comp[id]} alt={`Logo ${id + 1}`} width={100} height={100} />
+                                </div>
+                            ))}
+                        </Marquee>
 
 
-                )}
-                </div>  
+                    )}
+                </div>
 
 
 
