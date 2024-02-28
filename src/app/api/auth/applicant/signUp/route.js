@@ -33,9 +33,12 @@ export const POST = async (req, res) => {
       from: process.env.EMAIL,
       to: email,
       subject: "Welcome to CollegeRecruiter",
-      text: `Welcome to CollegeRecruiter, ${firstName}!`,
+      html: `
+        <h1>Welcome to CollegeRecruiter, ${firstName}!</h1>
+        <p>To verify your email, please click the button below:</p>
+        <a href="http://localhost:3000/" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block;">Verify Email</a>
+      `
     };
-
     transporter.sendMail(mailOptions, function (err, info) {
       if (err) {
         console.log(err);

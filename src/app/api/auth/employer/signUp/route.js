@@ -8,7 +8,8 @@ const prisma = new PrismaClient();
 
 export const POST = async (req, res) => {
   try {
-    const { name, email, passwordHash, companyId } = await req.json();    if (!validator.isEmail(email)) {
+    const { name, email, passwordHash, companyId } = await req.json(); 
+       if (!validator.isEmail(email)) {
       return NextResponse.json({ message: "Invalid email" });
     }
     if (!validator.isLength(passwordHash, { min: 8 })) {
