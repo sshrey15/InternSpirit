@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import validator from "validator";
+import jwt from "jsonwebtoken";
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -28,6 +29,8 @@ export const POST = async (req, res) => {
         message: "Password must be at least 8 characters long",
       });
     }
+    const passwordHash = await bcrypt.hash(password, 10);
+    const token =jwt.sign({firstName, lastName, email,passwordHash, collegeId}, process.env.JWT_SECRET,{expiresIn: '1h'})
 
     let mailOptions = {
       from: process.env.EMAIL,
@@ -36,9 +39,10 @@ export const POST = async (req, res) => {
       html: `
         <h1>Welcome to CollegeRecruiter, ${firstName}!</h1>
         <p>To verify your email, please click the button below:</p>
-        <a href="http://localhost:3000/" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block;">Verify Email</a>
+        <a href="http://localhost:3000/api/confirmEmail/${token}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block;">Verify Email</a>
       `
     };
+    
     transporter.sendMail(mailOptions, function (err, info) {
       if (err) {
         console.log(err);
@@ -48,7 +52,7 @@ export const POST = async (req, res) => {
       }
     });
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    
 
     const existingApplicant = await prisma.applicant.findUnique({
       where: { email },
@@ -58,17 +62,17 @@ export const POST = async (req, res) => {
       return NextResponse.json({ message: "Email already in use" });
     }
 
-    const applicant = await prisma.applicant.create({
-      data: {
-        firstName,
-        lastName,
-        email,
-        passwordHash,
-        collegeId,
-      },
-    });
+    // const applicant = await prisma.applicant.create({
+    //   data: {
+    //     firstName,
+    //     lastName,
+    //     email,
+    //     passwordHash,
+    //     collegeId,
+    //   },
+    // });
 
-    return NextResponse.json({ message: "success", applicant });
+    return NextResponse.json({ message: "Check your email to verify your account", token });
   } catch (err) {
     return NextResponse.json({ message: "error", err: err.message });
   }
