@@ -6,7 +6,8 @@ const prisma = new PrismaClient();
 
 export async function GET(req, {params}){
     const token = params.token;
-    console.log(token);
+
+    
 
 
     try{
@@ -28,8 +29,22 @@ export async function GET(req, {params}){
               collegeId,
             },
           });
-          return NextResponse.redirect('http://localhost:3000/');
-
+          const response = NextResponse.json({ message: "success", token });
+          response.cookies.set({
+            name: "applicant_signUp_Cookie",
+            value: token,
+            options: {
+              httpOnly: true,
+              sameSite: "strict",
+              maxAge: 60 * 60, // 1 hour
+              path: "/",
+            },
+          });
+          
+          
+          
+          
+        return   NextResponse.redirect(`http://localhost:3000/Login/student/${token}`);
     }catch(err){
         console.log(err);
         return NextResponse.json({message: "error", err: err.message})

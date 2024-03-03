@@ -23,6 +23,7 @@ export const POST = async (req, res) => {
     console.log(firstName, lastName, email, password, collegeId);
     if (!validator.isEmail(email)) {
       return NextResponse.json({ message: "Invalid email" });
+      
     }
     if (!validator.isLength(password, { min: 8 })) {
       return NextResponse.json({
@@ -62,17 +63,20 @@ export const POST = async (req, res) => {
       return NextResponse.json({ message: "Email already in use" });
     }
 
-    // const applicant = await prisma.applicant.create({
-    //   data: {
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     passwordHash,
-    //     collegeId,
-    //   },
-    // });
+    
 
-    return NextResponse.json({ message: "Check your email to verify your account", token });
+    const response = NextResponse.json({ message: "Check your email to verify your account", token });
+    response.cookies.set({
+      name: "applicant_signUp_Cookie",
+      value: token,
+      options: {
+        httpOnly: true,
+       sameSite: "None",
+        maxAge: 60 * 60, // 1 hour
+        path: "/",
+      },
+    });
+    return response;
   } catch (err) {
     return NextResponse.json({ message: "error", err: err.message });
   }
