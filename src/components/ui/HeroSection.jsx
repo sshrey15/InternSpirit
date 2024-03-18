@@ -210,7 +210,7 @@ const HeroSection = () => {
                 </div>
                 <div className='mt-10'>
                     {isClient && (
-                        <Marquee velocity={50}>
+                        <Marquee velocity={20}>
                             {times(logos.length, Number).map(id => (
                                 <div key={`marquee-example-${id}`} style={{ width: "200px", marginRight: "40px" }} className="flex items-center justify-center">
                                     <Image src={logos[id]} alt={`Logo ${id + 1}`} width={100} height={100} />
@@ -223,7 +223,7 @@ const HeroSection = () => {
                 </div>
                 <div className='mt-10'>
                     {isClient && (
-                        <Marquee velocity={90} direction='right'>
+                        <Marquee velocity={20} direction='right'>
                             {times(comp.length, Number).map(id => (
                                 <div key={`marquee-example-${id}`} style={{ width: "200px", marginRight: "40px" }} className="flex items-center justify-center">
                                     <Image src={comp[id]} alt={`Logo ${id + 1}`} width={100} height={100} />

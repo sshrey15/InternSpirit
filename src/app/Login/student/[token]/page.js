@@ -1,4 +1,5 @@
 "use client"
+import { Heading1 } from 'lucide-react';
 import React, { useState } from 'react';
 
 const Page = () => {
@@ -7,22 +8,24 @@ const Page = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission here
     console.log(`Email: ${email}, Password: ${password}`);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Email:
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-      </label>
-      <label>
-        Password:
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
-      </label>
-      <button type="submit">Login</button>
-    </form>
+    <>
+      <h1 className="text-4xl font-bold mb-4">Shrey</h1>
+      <form onSubmit={handleSubmit} className="bg-blue-200 p-6 rounded shadow-md justify-center items-center  w-1/2">
+        <label className="block mb-2">
+          Email:
+          <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="mt-1 p-2 w-full border rounded" />
+        </label>
+        <label className="block mb-2">
+          Password:
+          <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="mt-1 p-2 w-full border rounded" />
+        </label>
+        <button type="submit" className="mt-4 bg-blue-500 text-white p-2 rounded">Login</button>
+      </form>
+    </>
   );
 }
 

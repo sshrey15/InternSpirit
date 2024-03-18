@@ -80,3 +80,6 @@ export const POST = async (req, res) => {
     return NextResponse.json({ message: "error", err: err.message });
   }
 };
+
+
+export const PUT = async 
