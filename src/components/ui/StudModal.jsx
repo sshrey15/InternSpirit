@@ -102,7 +102,7 @@ const StudModal = () => {
                 body: JSON.stringify(studInfoWithoutConfirmPassword),
             });
             console.log('Response: ', response);
-            //shrye
+            //shrye kumar
 
             if (!response.ok) {
                 
