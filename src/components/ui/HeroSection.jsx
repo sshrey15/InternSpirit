@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+
+import { FaSearch } from 'react-icons/fa'
 import Marquee from "react-marquee-slider";
 import times from "lodash/times";
 import { useInView } from "react-intersection-observer";
@@ -11,6 +12,9 @@ import CountUp from 'react-countup';
 
 
 import VisibilitySensor from 'react-visibility-sensor';
+import PopularVacancies from './PopularVacancies';
+import Procedure from './Procedure';
+
 const data = [
     { title: 'Team Work', animation: 'animate-PopOut-1' },
     { title: 'Work Remotely', animation: 'animate-PopOut-2' },
@@ -84,76 +88,50 @@ const HeroSection = () => {
 
     return (
         <>
-            <section className="relative flex opacity-50 items-center justify-center h-screen">
-                <div className="absolute inset-0 z-10 bg-white opacity-50"></div>
-                <div className="absolute inset-0 z-0">
-
-                </div>
-            </section>
-
-
-
-
-
-            <section className="flex flex-col items-center  p-10 space-y-10 relative">
-
-
-                <div className="absolute h-full w-px font-bold bg-blue-500 left-1/2 -mt-10">
-
-                </div>
-
-
-
-                <Zoom>
-                    <div className="step items-center text-center grid grid-cols-2">
-                        <h3 className="text-9xl font-extrabold mb-2 text-blue-200 opacity-50 relative">
-                            01
-                            <p className="font-bold z-10 opacity-100 font-mono text-gray-900 absolute inset-0 flex  items-center text-3xl justify-center">SignUp /Login </p>
-                        </h3>                        <p className="text-gray-600 text-left p-5 font-semibold  z-10 relative">This is the first step.
-                            SignUp with your credentials then Login with your collegeId and
+            <section className="relative bg-custom-gray flex  justify-around items-center  h-screen p-40">
+                <div className="grid grid-cols-1 gap-2">
+                    <p className='text-black font-semibold w-10/12 text-4xl max-w-xl'>
+                        Find Internships that suits your interest & skills.
+                    </p>
+                    <p className='text-text-gray text-sm w-10/12 mt-4'>
+                        Aliquam vitae turpis in diam convallis finibus in at risus. Nullam in scelerisque leo, eget sollicitudin velit bestibulum.
+                    </p>
+                    <div className="relative w-10/12 flex">
+                        <FaSearch className="absolute top-1/2 left-3 font-thin transform -translate-y-1/2 text-hero-bg" />
+                        <input className="pl-10 w-full rounded-sm p-4 border mr-2" type="text" placeholder="Job title, Company, keyword" />
+                        <button className="bg-hero-bg absolute right-4 rounded-sm top-2 font-semibold justify-center text-white px-2 py-2">Find a Job</button>
+                    </div>
+                    <p className='text-custom-bg text-sm mt-2 flex gap-2'>
+                        Suggestion: <p className='text-text-gray'>
+                            <ul className='flex cursor-pointer'>
+                                <li className='hover:text-hero-bg'>Software Developer,</li>
+                                <li className='hover:text-hero-bg'>Web Developer,</li>
+                                <li className='hover:text-hero-bg '>Graphic Designer,</li>
+                            </ul>
                         </p>
-                    </div>
-                </Zoom>
-                <Zoom>
-                    <div className="step grid grid-cols-2 items-center text-center ">
-                        <p className="text-gray-600 font-semibold text-left p-5 z-10 relative">This is the second step. Nullam vitae semper ipsum. Suspendisse a congue velit. Proin at placerat risus.</p>
 
-                        <h3 className="text-9xl font-extrabold mb-2 text-blue-200 opacity-50 relative">02
-                            <p className="font-bold z-10   font-mono  text-gray-900 absolute inset-0 flex items-center text-3xl justify-center">Search Internships </p>
+                    </p>
 
-                        </h3>
-                    </div>
-                </Zoom>
-                <Zoom>
-                    <div className="step grid grid-cols-2 items-center text-center">
-                        <h3 className="text-9xl font-bold mb-2 text-blue-200 opacity-50 relative">03
-                            <p className="font-bold z-10 font-mono      text-gray-900 absolute inset-0 flex items-center text-3xl justify-center">Apply for Internships </p>
+                </div>
 
-                        </h3>
-                        <p className="text-gray-600 text-left p-5 z-10 relative">This is the third step. Vivamus commodo odio a dolor placerat, vel efficitur massa tincidunt. Donec at dapibus.</p>
-                    </div>
-                </Zoom>
+
+
+
+                <div className="ml-auto">
+                    <Image src="/images/hero.png" alt='shrey' width={500} height={500} />
+                </div>
             </section>
 
 
 
-            <section id="jobs" className="bg-blue-50 md:p-10 p-5 place-content-center">
-                <div className='relative'>
-                    <h2 className="text-7xl text-center font-extrabold  opacity-50 m-4 text-blue-200 mb-2 relative">Latest Internships
-                    </h2>
-                    <p className="font-bold z-10  font-mono underline opacity-70 cursor-pointer    text-gray-900 absolute inset-0 flex items-center text-2xl justify-center">Apply now </p>
-                </div>
-                <div className="container mx-auto flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-16">
-                    <div className="md:w-full grid grid-cols-1 p-6 md:p-20 -mt-10 md:grid-cols-3 gap-8">
-                        {data.map((item, index) => (
-                            <Fade duration={1000} key={index}>
-                                <div className={`bg-white border p-6 ${item.animation} shadow-md text-center`}>
-                                    <h3 className="text-xl font-mono     font-bold mb-2">{item.title}</h3>
-                                </div>
-                            </Fade>
-                        ))}
-                    </div>
-                </div>
+            <section className="flex flex-col   p-20 space-y-10 relative">
+            
+                <PopularVacancies/>
+            </section>
+            
+            <section className="flex flex-col justify-center items-center  bg-custom-gray   p-20 space-y-10 relative">
+            <h1 className='font-bold items-center justify-center pl-10 text-3xl'>How InternSpirit Works</h1>
+                <Procedure/>
             </section>
 
 

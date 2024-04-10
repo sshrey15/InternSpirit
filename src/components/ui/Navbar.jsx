@@ -13,6 +13,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import StudModal from './StudModal';
+import Searchbar from './Searchbar';
 
 
 const Navbar = () => {
@@ -20,7 +21,8 @@ const Navbar = () => {
     // const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
-        <nav className="fixed w-full bg-white text-black z-50">
+        <>
+        <nav className="fixed w-full h-10 bg-custom-gray text-text-gray z-50 flex items-center">
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
                 <div className="relative flex items-center justify-between h-16">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -35,35 +37,19 @@ const Navbar = () => {
                         </button>
                     </div>
                     <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                        <div className="flex-shrink-0 flex items-center">
-                            <Link href="/">
-                            <h1 className="flex underline font-bold text-blue-300">Intern<p className="text-gray-600">spirit.com</p></h1>
 
-                            </Link>
-
-                        </div>
-                        <div className="hidden sm:block sm:ml-6">
-                            <div className="flex space-x-9">
-                                <a href="#" className=" text-gray-400 px-3 py-2 rounded-md text-sm font-medium">Internships</a>
-                                <a href="#" className=" text-gray-400 px-3 py-2 rounded-md text-sm font-medium">Courses</a>
-                                <div className="mr-30      flex space-x-4">
-                                    <Dialog className="bg-white cursor-pointer"  >
-                                        <DialogTrigger asChild>
-                                    <h4  className="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</h4>
-                                        </DialogTrigger>
-                                        <LoginModal/>
-                                    </Dialog>
-                                    <Dialog className="bg-white" t>
-                                        <DialogTrigger asChild>
-                                            <h4 className="text-gray-300 hover:bg-gray-700 cursor-pointer hover:text-white px-3 py-2 rounded-md text-sm font-medium">Student  Signup</h4>
-                                        </DialogTrigger>
-                                       <StudModal/>
-                                    </Dialog>                                <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Employer Signup</a>
-                                </div>
+                        <div className="hidden text-text-gray sm:block sm:ml-6">
+                            <div className="flex space-x-9 ">
+                                <a href="#" className=" hover:text-hero-bg  px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                                <a href="#" className=" hover:text-hero-bg px-3 py-2 rounded-md text-sm font-medium">Find Internships</a>
+                                <a href="#" className="hover:text-hero-bg  px-3 py-2 rounded-md text-sm font-medium">Companies</a>
+                                <a href="#" className=" hover:text-hero-bg px-3 py-2 rounded-md text-sm font-medium">Customer Support</a>
+                               
                             </div>
                         </div>
                     </div>
                 </div>
+                
 
                 <div className={`${isOpen ? 'block' : 'hidden'} sm:hidden`}>
                     <div className="px-2 pt-2 pb-3 space-y-1">
@@ -74,7 +60,11 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
+            
         </nav>
+        <Searchbar/>
+
+        </>
     );
 }
 

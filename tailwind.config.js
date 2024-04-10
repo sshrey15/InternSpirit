@@ -18,7 +18,12 @@ module.exports = {
     },
     extend: {
       colors: {
-        // ...other colors
+        'custom-gray': '#F1F2F4',
+        'hero-bg': '#0A65CC',
+        'text-gray': '#5E6670'
+      },
+      rotate: {
+        '270': '270deg',
       },
       borderRadius: {
         // ...other borderRadius
