@@ -7,7 +7,7 @@ import validator from "validator";
 import jwt from "jsonwebtoken";
 
 let transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
@@ -23,7 +23,6 @@ export const POST = async (req, res) => {
     console.log(firstName, lastName, email, password, collegeId);
     if (!validator.isEmail(email)) {
       return NextResponse.json({ message: "Invalid email" });
-      
     }
     if (!validator.isLength(password, { min: 8 })) {
       return NextResponse.json({
@@ -31,19 +30,31 @@ export const POST = async (req, res) => {
       });
     }
     const passwordHash = await bcrypt.hash(password, 10);
-    const token =jwt.sign({firstName, lastName, email,passwordHash, collegeId}, process.env.JWT_SECRET,{expiresIn: '1h'})
+    const token = jwt.sign(
+      { firstName, lastName, email, passwordHash, collegeId },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     let mailOptions = {
       from: process.env.EMAIL,
       to: email,
-      subject: "Welcome to CollegeRecruiter",
+      subject: "Welcome to InternSpirit",
       html: `
-        <h1>Welcome to CollegeRecruiter, ${firstName}!</h1>
-        <p>To verify your email, please click the button below:</p>
-        <a href="http://localhost:3000/api/confirmEmail/${token}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block;">Verify Email</a>
-      `
+      <div style="background-color: #f8f9fa; padding: 20px; text-align: center;">
+        <img src="http://localhost:3000/path-to-your-logo.png" alt="InternSpirit Logo" style="width: 200px;"/>
+        <h1 style="color: #343a40;">Welcome to InternSpirit, ${firstName}!</h1>
+        <p style="
+        color: #6c757d;
+        font-size: 1.2rem;
+
+        ">Welcome to InternSpirit, the premier college-based internship portal dedicated to empowering the next generation of professionals. Our mission is to provide students with unparalleled opportunities to discover and secure the perfect internships, launching them into successful careers. With InternSpirit, students gain access to a vast network of top-tier companies and organizations, offering diverse and enriching internship experiences tailored to their unique skills and aspirations. Whether you're a budding engineer, a future marketer, or an aspiring entrepreneur, InternSpirit is your ultimate partner in unlocking the doors to endless possibilities and charting the course towards a bright and fulfilling future. Join us on the journey to greatness, where your internship dreams become reality!</p>
+        <p style="color: #6c757d;">To verify your email and start exploring opportunities, please click the button below:</p>
+        <a href="http://localhost:3000/api/confirmEmail/${token}" style="background-color: #0A65CC; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; margin-top: 20px;">Verify Email</a>
+      </div>
+    `,
     };
-    
+
     transporter.sendMail(mailOptions, function (err, info) {
       if (err) {
         console.log(err);
@@ -53,8 +64,6 @@ export const POST = async (req, res) => {
       }
     });
 
-    
-
     const existingApplicant = await prisma.applicant.findUnique({
       where: { email },
     });
@@ -63,15 +72,16 @@ export const POST = async (req, res) => {
       return NextResponse.json({ message: "Email already in use" });
     }
 
-    
-
-    const response = NextResponse.json({ message: "Check your email to verify your account", token });
+    const response = NextResponse.json({
+      message: "Check your email to verify your account",
+      token,
+    });
     response.cookies.set({
       name: "applicant_signUp_Cookie",
       value: token,
       options: {
         httpOnly: true,
-       sameSite: "None",
+        sameSite: "None",
         maxAge: 60 * 60, // 1 hour
         path: "/",
       },

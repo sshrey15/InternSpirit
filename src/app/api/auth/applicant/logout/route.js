@@ -10,7 +10,7 @@ export const GET = async (req, res) => {
       options: {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "None",
         maxAge: 0,
         path: "/",
       },

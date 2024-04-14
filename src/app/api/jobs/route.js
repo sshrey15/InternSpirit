@@ -1,25 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 const prisma = new PrismaClient();
 
-// model Job {
-//     id          String     @id @default(uuid())
-//     title       String
-//     description String
-//     postedAt    DateTime @default(now())
-//     companyId   String
-//     company     Company  @relation(fields: [companyId], references: [id])
-//     applications JobApplication[]
-//     collegeId   String
-//     college      College  @relation(fields: [collegeId], references: [id])
-//     employer    Employer[]
-//     type        JobType
-//     skills     String[]
-//   }
-
 export const GET = async (req, res) => {
   try {
+   
     const jobs = await prisma.job.findMany({
       include: {
         college: true,

@@ -16,7 +16,7 @@ export const POST = async (req, res) => {
 
     if (!applicant) {
       // If the applicant does not exist, return an error
-      return NextResponse.json({ message: "Invalid email or password" });
+      return NextResponse.json({ message: "Invalid email" });
     }
 
     // Compare the provided password with the hashed password stored in the database
@@ -27,22 +27,24 @@ export const POST = async (req, res) => {
 
     if (!passwordIsValid) {
       // If the passwords do not match, return an error
-      return NextResponse.json({ message: "Invalid email or password" });
+      return NextResponse.json({ message: "Invalid password" });
     }
 
     // If the passwords match, generate a JWT
     const token = jwt.sign({ id: applicant.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
     // Return the JWT in the response
-    const response = NextResponse.json({ message: "success", token });
+    const response = NextResponse.json({ message: "success", token, 
+    status: 200
+   });
     response.cookies.set({
       name: "applicantCookie",
       value: token,
       options: {
         httpOnly: true,
-        sameSite: "strict",
+        sameSite: "None",
         maxAge: 60 * 60, // 1 hour
         path: "/",
       },

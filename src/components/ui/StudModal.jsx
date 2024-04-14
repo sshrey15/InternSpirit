@@ -1,7 +1,8 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button"
-import { Bars } from 'react-loader-spinner'
+import Animation from './Animations';
+import { useAuthContext } from '@/context/AuthContext';
 import {
     Dialog,
     DialogContent,
@@ -25,17 +26,19 @@ import { set } from 'lodash';
 
 const StudModal = () => {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    const{isLoggedIn, setIsLoggedIn} = useAuthContext();
     // const { firstName, lastName, email, password, collegeId } =
-    const [isloading, setIsloading] = useState(false);
+
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const openDialog = () => {
         setIsDialogOpen(true);
-      };
+    };
 
-      const closeDialog = () => {
+    const closeDialog = () => {
         setIsDialogOpen(false);
-      };
-      
+    };
+
     const [studInfo, setstudInfo] = useState({
         firstName: "",
         lastName: "",
@@ -46,11 +49,7 @@ const StudModal = () => {
 
     })
 
-    useEffect(() => {
-        if (isloading) {
-            closeDialog();
-        }
-    }, [isloading]);
+
 
 
     const handleChange = (e) => {
@@ -79,13 +78,14 @@ const StudModal = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsloading(true);
+        setIsLoading(true);
+
         closeDialog();
         console.log("submitted");
 
         if (studInfo.confirmpassword && studInfo.confirmpassword !== studInfo.password) {
             alert("Passwords do not match");
-            setIsloading(false);
+
             return
         }
 
@@ -105,7 +105,7 @@ const StudModal = () => {
             //shrye kumar
 
             if (!response.ok) {
-                
+
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
@@ -113,10 +113,12 @@ const StudModal = () => {
             console.log('DATA', data);
         } catch (error) {
             console.error('There was a problem with the fetch operation: ', error);
-        } finally {
-            setIsloading(false);
         }
+        setIsLoggedIn(true);
+        setIsLoading(false);
+
         router.push("/Login/student/verify")
+
     };
 
 
@@ -140,7 +142,7 @@ const StudModal = () => {
                                     <Input
                                         value={studInfo.firstName}
                                         id="firstName"
-                                        className="col-span-3"
+                                        className="col-span-3 "
                                         placeholder="Angad"
                                         name="firstName"
                                         onChange={handleChange}
@@ -225,40 +227,19 @@ const StudModal = () => {
                         </div>
                         <form onSubmit={handleSubmit}>
                             <DialogFooter>
-                            <DialogClose asChild>
-                            <Button type="submit" className="bg-green-500 text-white" onClick={() => setIsloading(true)}>
-                                    SignUp
-                                </Button>
-          </DialogClose>
-                              
+                                <DialogClose asChild>
+                                    <Button type="submit" className="bg-hero-bg text-white" >
+                                        SignUp
+                                    </Button>
+                                </DialogClose>
+
                             </DialogFooter>
+                            
                         </form>
+                        {isLoading && <Animation />}
                     </DialogContent>
                 </form>
             </Form>
-            {
-            isloading && 
-            <div style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)', // Optional: This will add a semi-transparent background
-            }}>
-                <Bars
-                    height="80"
-                    width="80"
-                    color="#4fa94d"
-                    ariaLabel="bars-loading"
-                    visible={true}
-                />
-            </div>
-        }
-
 
 
         </>

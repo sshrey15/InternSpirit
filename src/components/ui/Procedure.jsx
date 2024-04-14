@@ -14,7 +14,7 @@ const Procedure = () => {
             <section className='relative grid grid-cols-4 gap-4 p-4'>
                 <div className='flex flex-col p-5 items-center space-y-2'>
                     <div className='bg-white p-3     rounded-full'>
-                        <CiUser className='text-hero-bg  ' size={50} />
+                        <CiUser className='text-hero-bg  ' size={40} />
 
 
                     </div>
@@ -26,7 +26,7 @@ const Procedure = () => {
                 </div>
                 <div className='flex flex-col rounded-md p-5 items-center space-y-2'>
                     <div className='bg-hero-bg p-3      rounded-full'>
-                        <IoIosCloudUpload className='text-white  ' size={50} />
+                        <IoIosCloudUpload className='text-white  ' size={40} />
 
 
                     </div>
@@ -38,7 +38,7 @@ const Procedure = () => {
                 </div>
                 <div className='flex flex-col p-5 items-center space-y-2'>
                     <div className='bg-white p-3      rounded-full'>
-                        <CiSearch className='text-hero-bg  font-thin ' size={50} />
+                        <CiSearch className='text-hero-bg  font-thin ' size={40} />
 
 
                     </div>
@@ -47,7 +47,7 @@ const Procedure = () => {
                 </div>
                 <div className='flex flex-col  rounded-md items-center p-5 space-y-2'>
                     <div className='bg-hero-bg p-3      rounded-full'>
-                        <CiCircleCheck className='text-white    font-thin ' size={50} />
+                        <CiCircleCheck className='text-white    font-thin ' size={40} />
 
 
                     </div>
