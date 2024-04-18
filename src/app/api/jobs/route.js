@@ -15,6 +15,7 @@ export const GET = async (req, res) => {
         applications: true,
         college: true,
         employer: true,
+        company: true,
       },
     });
 

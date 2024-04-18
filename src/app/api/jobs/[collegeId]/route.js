@@ -37,6 +37,7 @@ export const GET = async (req, { params }) => {
         applications: true,
         college: true,
         employer: true,
+        company: true,
       },
     });
     console.log(job);
