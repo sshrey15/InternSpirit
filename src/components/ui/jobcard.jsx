@@ -21,6 +21,7 @@ const JobCard = ({ job }) => {
       <hr className='text-purple-500'/>
       <CardHeader className="flex gap-3 align-middle">
         <div className='flex gap-10'>
+          
           <CardTitle className="text-sm font-bold hover:text-purple-500 cursor-pointer">{job.title}</CardTitle>
         </div>
       </CardHeader>
