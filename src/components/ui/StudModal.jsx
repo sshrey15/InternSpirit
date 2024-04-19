@@ -27,7 +27,7 @@ import { set } from 'lodash';
 const StudModal = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const{isLoggedIn, setIsLoggedIn} = useAuthContext();
+    const { isLoggedIn, setIsLoggedIn } = useAuthContext();
     // const { firstName, lastName, email, password, collegeId } =
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -234,7 +234,7 @@ const StudModal = () => {
                                 </DialogClose>
 
                             </DialogFooter>
-                            
+
                         </form>
                         {isLoading && <Animation />}
                     </DialogContent>

@@ -55,7 +55,6 @@ model College {
   id       String @id @default(uuid())
   name     String
   location String
-
   jobs Job[]
 }
 
@@ -64,7 +63,6 @@ model Employer {
   name      String
   email     String @unique
   password  String
-
   companyId String
   company   Company @relation(fields: [companyId], references: [id])
   jobs      Job[]

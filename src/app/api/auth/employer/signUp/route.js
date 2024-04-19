@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 export const POST = async (req, res) => {
   try {
-    const { name, email, passwordHash, companyId } = await req.json(); 
+    const { name, email, passwordHash, companyId, companyName, companyLocation } = await req.json(); 
        if (!validator.isEmail(email)) {
       return NextResponse.json({ message: "Invalid email" });
     }
@@ -32,12 +32,21 @@ export const POST = async (req, res) => {
       return NextResponse.json({ message: "Email already in use" });
     }
 
+    const company = await prisma.company.create({
+      data:{
+        name: companyName,
+        location: companyLocation,
+      }
+    })
+
     const employer = await prisma.employer.create({
       data: {
         name,
         email,
         password,
-        companyId,
+        companyId: company.id,
+        
+        
         
       },
     });
