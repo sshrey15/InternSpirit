@@ -85,7 +85,7 @@ const EmployerModal = () => {
        
         setIsLoading(false);
 
-        router.push("/Login/employer/verify")
+        router.push("/Login/employer")
 
 
     }

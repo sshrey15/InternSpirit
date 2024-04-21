@@ -114,7 +114,6 @@ const StudModal = () => {
         } catch (error) {
             console.error('There was a problem with the fetch operation: ', error);
         }
-        setIsLoggedIn(true);
         setIsLoading(false);
 
         router.push("/Login/student/verify")

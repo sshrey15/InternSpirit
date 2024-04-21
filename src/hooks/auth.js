@@ -11,8 +11,7 @@ export const useAuth = () => {
   useEffect(() => {
     const checkLoginStatus = () => {
       const cookies = parseCookies();
-      const loggedIn = 'applicantCookie' in cookies;
-      setIsLoggedIn(loggedIn);
+      const loggedIn = 'applicantCookie' in cookies || 'employerCookie' in cookies;      setIsLoggedIn(loggedIn);
 
       // Store the value in local storage
       localStorage.setItem('isLoggedIn', loggedIn);
