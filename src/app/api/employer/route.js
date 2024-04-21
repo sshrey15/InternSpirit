@@ -19,6 +19,7 @@ export const GET = async (req) => {
   
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const employerId = decoded.id;
+
         const employer = await prisma.employer.findUnique({
             where: {
                 id: employerId
@@ -36,6 +37,7 @@ export const GET = async (req) => {
                 }
             }
         });
+        console.log(employer)
 
         const companyId = employer.companyId
         console.log(companyId)
