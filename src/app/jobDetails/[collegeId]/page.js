@@ -38,7 +38,7 @@ export default function JobDetails({params:{ collegeId }}) {
   return (
     <div>
       {jobs.map((job) => (
-        <Link href="/jobDescription">
+        <Link href={`/jobDetails/${collegeId}/${job.id}`}>
           <JobCard job={job} />
         </Link>
       ))}
