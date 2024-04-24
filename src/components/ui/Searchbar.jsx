@@ -21,7 +21,7 @@ const Searchbar = ({isLoggedIn}) => {
 
     return (
         <nav className="flex  items-center justify-between p-5 pt-16 bg-white">
-            <div className="text-hero-bg font-bold text-2xl">InternSpirt</div>
+            <div className="text-hero-bg font-bold text-2xl">InternSpirit</div>
             <div className="flex-1 px-4 gap-2 flex items-center">
 
                 <div className="relative w-1/2">
