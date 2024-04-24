@@ -17,7 +17,7 @@ const Page = () => {
   };
 
   useEffect(() => {
-    fetch("/api/college", { cache: "reload" })
+    fetch("/api/college", { cache: "force-cache" })
       .then((response) => response.json())
       .then((data) => {
         if (

@@ -36,7 +36,7 @@ export default function JobDetails({params:{ collegeId }}) {
   }
 
   return (
-    <div  className='mx-3 grid-cols-1 md:grid grid-cols-3 gap-4 mx-6'>
+    <div  className=' md:grid grid-cols-3 gap-4 mx-6'>
       {jobs.map((job) => (
         <Link key={job.id} href={`/jobDetails/${collegeId}/${job.id}`}>
           <JobCard job={job} />

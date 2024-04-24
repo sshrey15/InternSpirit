@@ -12,7 +12,7 @@ const   ParentComponent  = ()  => {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    fetch('http://localhost:3000/api/employer', {cache: 'default'})
+    fetch('http://localhost:3000/api/employer', {cache: 'force-cache'})
       .then(response => response.json())
       .then(data => {
         setEmployerName(data.employer.name);
