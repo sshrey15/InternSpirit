@@ -3,33 +3,50 @@ import React, { useState, useEffect } from 'react';
 
 import Link from 'next/link';
 import { destroyCookie, parseCookies } from 'nookies';
-
-
 import Searchbar from './Searchbar';
 import { useAuthContext } from '@/context/AuthContext';
 
 
 
 
-const Navbar = () => {
+const Navbar= () => {
     const [isOpen, setIsOpen] = useState(false);
-    
-    const { isLoggedIn, setIsLoggedIn} = useAuthContext();
+    const { isLoggedIn, setIsLoggedIn } = useAuthContext();
+    const cookies = parseCookies();
 
+    useEffect(() => {
+        if (cookies.applicantCookie || cookies.employerCookie) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      }, []);
+
+    let dashboardLink = '/Dashboard/student';
+    if (cookies.employerCookie) {
+        dashboardLink = '/Dashboard/employer/profile';
+    }
+
+  
     const Logout = async () => {
         try {
+          if (cookies.applicantCookie) {
             const response = await fetch('/api/auth/applicant/logout');
             const data = await response.json();
             console.log(data);
-            destroyCookie(null, 'applicantCookie',{ path: '/'})
-            setIsLoggedIn(false);
-             ;
-           
-        
+            destroyCookie(null, 'applicantCookie', { path: '/' });
+          } else if (cookies.employerCookie) {
+            const response = await fetch('/api/auth/employer/logout');
+            const data = await response.json();
+            console.log(data);
+            destroyCookie(null, 'employerCookie', { path: '/' });
+          }
+      
+          setIsLoggedIn(false);
         } catch (error) {
-            console.error('Error:', error);
+          console.error('Error:', error);
         }
-    };
+      };
 
 
 
@@ -60,7 +77,7 @@ const Navbar = () => {
                                 <div className="flex space-x-9 ">
 
                                     <Link href="/" className=" hover:text-hero-bg  px-3 py-2 rounded-md text-sm font-medium">Home</Link>
-                                    <Link href="/Dashboard/student" className=" hover:text-hero-bg px-3 py-2 rounded-md text-sm font-medium">Dashboard</Link>
+                                    <Link href={dashboardLink} className=" hover:text-hero-bg px-3 py-2 rounded-md text-sm font-medium">Dashboard</Link>
                                     <a href="#" className="hover:text-hero-bg  px-3 py-2 rounded-md text-sm font-medium">Companies</a>
                                     <a href="#" className=" hover:text-hero-bg px-3 py-2 rounded-md text-sm font-medium">Customer Support</a>
                                     {
@@ -89,8 +106,8 @@ const Navbar = () => {
                     </div>
                 </div>
 
-            </nav> 
-            <Searchbar isLoggedIn={isLoggedIn}   />
+            </nav>
+            <Searchbar isLoggedIn={isLoggedIn} />
 
         </>
     );

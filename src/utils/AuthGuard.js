@@ -1,6 +1,7 @@
 "use client"
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import {parseCookies} from 'nookies'
 
 
 import { useAuthContext } from '@/context/AuthContext';

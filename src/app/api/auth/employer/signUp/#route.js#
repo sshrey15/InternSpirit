@@ -14,7 +14,8 @@ export const POST = async (req, res) => {
     }
     if (!validator.isLength(passwordHash, { min: 8 })) {
       return NextResponse.json({
-        message: "Password must be at least 8 characters long",
+          message: "Password must be at least 8 characters long",
+	 
       });
     }
 
