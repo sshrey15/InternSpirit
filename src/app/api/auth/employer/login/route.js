@@ -14,7 +14,7 @@ export const POST = async (req, res) => {
     });
 
     if (!employer) {
-      return NextResponse.json({ message: "Invalid email or password" });
+      return NextResponse.json({ message: "Invalid email " });
     }
 
     const passwordIsValid = await bcrypt.compare(
@@ -27,7 +27,7 @@ export const POST = async (req, res) => {
     }
 
     const token = jwt.sign({ id: employer.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
     const response = NextResponse.json({ message: "success", token });
@@ -36,7 +36,7 @@ export const POST = async (req, res) => {
       value: token,
       options: {
         httpOnly: true,
-        sameSite: "strict",
+        sameSite: "None",
         maxAge: 60 * 60, // 1 hour
         path: "/",
       },

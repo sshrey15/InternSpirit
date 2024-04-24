@@ -10,6 +10,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import StudModal from './StudModal';
+import EmployerModal from './EmployerModal'
 
 
 
@@ -49,7 +50,7 @@ const Searchbar = ({isLoggedIn}) => {
                         <button className="bg-hero-bg font-semibold text-white rounded-sm px-4 py-2">Post a Job</button>
 
                     </DialogTrigger>
-                    <LoginModal />
+                    <EmployerModal/>
                 </Dialog>
             </div>
 

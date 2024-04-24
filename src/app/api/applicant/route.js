@@ -13,6 +13,7 @@ export const GET = async (req, res) => {
         educations: true,
         personalInfos: true,
         applications: true,
+        skills: true,
       },
     });
 
@@ -82,4 +83,3 @@ export const POST = async (req, res) => {
 };
 
 
-export const PUT = async 
