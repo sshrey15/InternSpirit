@@ -14,6 +14,7 @@ import EmployerModal from './EmployerModal'
 
 
 
+
 const Searchbar = ({isLoggedIn}) => {
   
 
