@@ -21,7 +21,7 @@ const JobsTable = ({jobs}) => {
         {jobs && jobs.map((job) => (
             <tr key={job.id} className='text-center border-b'>
               <td className=" px-4 py-2">{job.title}</td>
-              <td className=" px-4 py-2">{job.applicants ? job.applicants.length: 0}</td>
+              <td className=" px-4 py-2">{job.applicants ? job.applicants.length: 0 }</td>
               <td className=" font-semibold text-sm px-4 py-2">
                 <button className="p-2  items-center justify-center text-hero-bg bg-custom-gray hover:bg-hero-bg hover:text-custom-gray">View Applications</button>
               </td>

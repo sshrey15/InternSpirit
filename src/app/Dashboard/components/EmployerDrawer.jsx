@@ -5,7 +5,7 @@ import { FiMenu, FiX } from 'react-icons/fi';
 import { FiUser, FiPlus, FiBriefcase, FiHeart, FiDollarSign, FiSettings, FiLogOut } from 'react-icons/fi';
 
 const EmployerDrawer = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     return (
         <div className={`absolute z-50 transform transition-transform duration-300   left-4 top-22 h-screen w-64 bg-white border-r     ${isOpen ? 'translate-x-0' : 'translate-x-[-90%]'} z-20`}>
