@@ -38,7 +38,7 @@ const Page = () => {
         console.error("Error:", error);
         setIsLoading(false);
       });
-  }, []);
+  }, [router]);
 
   if (isLoading) {
     return (
