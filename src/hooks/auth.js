@@ -1,25 +1,32 @@
 import { useState, useEffect } from 'react';
-import { parseCookies } from 'nookies';
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
 
 export const useAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    // Get the initial value from local storage
-    const value = localStorage.getItem('isLoggedIn');
-    return value === 'true';
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const checkLoginStatus = () => {
       const cookies = parseCookies();
-      const loggedIn = 'applicantCookie' in cookies || 'employerCookie' in cookies;      setIsLoggedIn(loggedIn);
-
-      // Store the value in local storage
-      localStorage.setItem('isLoggedIn', loggedIn);
+      const loggedIn = 'applicantCookie' in cookies || 'employerCookie' in cookies;
+      setIsLoggedIn(loggedIn);
     };
 
-    // Run checkLoginStatus when the component mounts
     checkLoginStatus();
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
-  return { isLoggedIn, setIsLoggedIn };
+  const login = () => {
+    setCookie(null, 'applicantCookie', 'true', {
+      expires,
+      path: '/',
+    });
+    setIsLoggedIn(true);
+  };
+
+  const logout = () => {
+    destroyCookie(null, 'applicantCookie');
+    destroyCookie(null, 'employerCookie');
+    setIsLoggedIn(false);
+  };
+
+  return { isLoggedIn, login, logout, setIsLoggedIn };
 };

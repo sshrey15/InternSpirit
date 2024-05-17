@@ -1,6 +1,5 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-
 import Link from 'next/link';
 import { destroyCookie, parseCookies } from 'nookies';
 import Searchbar from './Searchbar';
@@ -75,10 +74,17 @@ const Navbar= () => {
 
                             <div className="hidden text-text-gray sm:block sm:ml-6">
                                 <div className="flex space-x-9 ">
+                                {
+                                    !isLoggedIn ? (
+                                             <Link href="/" className=" hover:text-hero-bg  px-3 py-2 rounded-md text-sm font-medium">Home</Link>
 
-                                    <Link href="/" className=" hover:text-hero-bg  px-3 py-2 rounded-md text-sm font-medium">Home</Link>
+                                        ) : (
+                                            null
+                                        )
+                                }
+
                                     <Link href={dashboardLink} className=" hover:text-hero-bg px-3 py-2 rounded-md text-sm font-medium">Dashboard</Link>
-                                    <a href="#" className="hover:text-hero-bg  px-3 py-2 rounded-md text-sm font-medium">Companies</a>
+                                    <a href="#" className="hover:text-hero-bg  px-3 py-2 rounded-md text-sm font-medium">Contest</a>
                                     <a href="#" className=" hover:text-hero-bg px-3 py-2 rounded-md text-sm font-medium">Customer Support</a>
                                     {
                                         isLoggedIn ? (

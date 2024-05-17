@@ -21,13 +21,13 @@ const Searchbar = ({isLoggedIn}) => {
    
 
     return (
-        <nav className="flex border  items-center justify-between p-5 pt-16  bg-white">
+        <nav className="flex border  items-center justify-between p-5 pt-16   bg-white">
             <div className="text-hero-bg font-bold text-2xl">InternSpirit</div>
             <div className="flex-1 px-4 gap-2 flex items-center">
 
                 <div className="relative w-1/2">
                     <FaSearch className="absolute top-1/2 left-3 font-thin transform -translate-y-1/2 text-hero-bg" />
-                    <input className="pl-10 w-full rounded-sm p-2 border" type="text" placeholder="Job title, Company, keyword" />
+                    <input className="pl-10 w-full rounded-full p-2 border" type="text" placeholder="Job title, Company, keyword" />
                 </div>
             </div>
             {

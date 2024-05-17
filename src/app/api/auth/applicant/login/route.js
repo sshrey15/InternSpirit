@@ -45,7 +45,7 @@ export const POST = async (req, res) => {
       options: {
         httpOnly: true,
         sameSite: "None",
-        maxAge: 60 * 60, // 1 hour
+        maxAge: 60 * 60 * 24 * 7, // 1 week
         path: "/",
       },
     });

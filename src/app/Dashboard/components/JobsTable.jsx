@@ -4,9 +4,10 @@ import { FiMoreVertical } from 'react-icons/fi';
 const JobsTable = ({jobs}) => {
   return (
     <>
-        <div className="flex  ml-72  flex-col  justify-start p-2 bg-white  rounded">
+      
+        <div className="flex  ml-72  flex-col   justify-start p-2 bg-white  rounded">
         <h1 className='mt-2 text-lg font-semibold'>Recently posted Jobs</h1>
-      <table className="table-auto w-full mt-5">
+      <table className="table-auto w-3/4 grid-cols-2  mt-5">
         
         <thead>
           <tr className='bg-custom-gray text-text-gray text-sm font-thin'>
@@ -23,12 +24,14 @@ const JobsTable = ({jobs}) => {
               <td className=" px-4 py-2">{job.title}</td>
               <td className=" px-4 py-2">{job.applicants ? job.applicants.length: 0 }</td>
               <td className=" font-semibold text-sm px-4 py-2">
-                <button className="p-2  items-center justify-center text-hero-bg bg-custom-gray hover:bg-hero-bg hover:text-custom-gray">View Applications</button>
+                <button className="p-4  rounded-full  items-center justify-center text-hero-bg bg-custom-gray hover:bg-hero-bg hover:text-custom-gray">View Applications</button>
               </td>
               <td className=" px-4 py-2">{job.postedAt}</td>
               <td className="px-4 py-2">
-                <button className="focus:outline-none" >
-                  <FiMoreVertical className="h-6 w-6 text-gray-500" />
+                <button className="focus:outline-none " >
+                  
+                    <FiMoreVertical className="text-2xl cursor-pointer" />
+                  
                 </button>
               </td> 
             </tr>

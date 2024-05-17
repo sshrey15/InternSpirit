@@ -17,7 +17,6 @@ import { useAuthContext } from "@/context/AuthContext";
 const Page = () => {
   const router = useRouter();
   const [login, setLogin] = useState({
-    
     email: "",
     passwordHash: "",
   });
