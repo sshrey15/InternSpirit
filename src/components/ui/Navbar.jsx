@@ -79,7 +79,8 @@ const Navbar= () => {
                                              <Link href="/" className=" hover:text-hero-bg  px-3 py-2 rounded-md text-sm font-medium">Home</Link>
 
                                         ) : (
-                                            null
+                                            <Link href="/" className=" hover:text-hero-bg  px-3 py-2 rounded-md text-sm font-medium">Home</Link>
+
                                         )
                                 }
 

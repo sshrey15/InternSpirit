@@ -8,6 +8,7 @@ export const useAuth = () => {
     const checkLoginStatus = () => {
       const cookies = parseCookies();
       const loggedIn = 'applicantCookie' in cookies || 'employerCookie' in cookies;
+      
       setIsLoggedIn(loggedIn);
     };
 
@@ -16,7 +17,7 @@ export const useAuth = () => {
 
   const login = () => {
     setCookie(null, 'applicantCookie', 'true', {
-      expires,
+      expires: new Date(Date.now() + 24 * 3600 * 1000),
       path: '/',
     });
     setIsLoggedIn(true);

@@ -6,8 +6,7 @@ const JobsTable = ({jobs}) => {
     <>
       
         <div className="flex  ml-72  flex-col   justify-start p-2 bg-white  rounded">
-        <h1 className='mt-2 text-lg font-semibold'>Recently posted Jobs</h1>
-      <table className="table-auto w-3/4 grid-cols-2  mt-5">
+      <table className="table-auto w-full grid-cols-2  mt-5">
         
         <thead>
           <tr className='bg-custom-gray text-text-gray text-sm font-thin'>

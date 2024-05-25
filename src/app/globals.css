@@ -4,7 +4,8 @@
 
 /* Incorrect */
 body {
-  font-family: Arial sans-serif; /* Missing comma between 'Arial' and 'sans-serif' */
+  font-family: Arial sans-serif; 
+  /* Missing comma between 'Arial' and 'sans-serif' */
 }
 
 /* Correct */

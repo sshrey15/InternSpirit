@@ -5,12 +5,21 @@ import Loading from "@/app/loading";
 import CollegeCard from "../../components/CollegeCard";
 import HardcodedBarGraph from "../../components/BarGraph";
 
-
 const Page = () => {
   const [colleges, setColleges] = useState(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [skill, setSkill] = useState("");
+
+  const [selectedColleges, setSelectedColleges] = useState([]);
+
+  const handleSelectCollege = (college, isSelected) => {
+    if (isSelected) {
+      setSelectedColleges((prev) => [...prev, college]);
+    } else {
+      setSelectedColleges((prev) => prev.filter((c) => c !== college));
+    }
+  };
 
   const handleInputChange = (e) => {
     setSkill(e.target.value);
@@ -50,14 +59,14 @@ const Page = () => {
 
   return (
     <>
-
-     
-     <div className="w-full flex justify-between mt-4 align-middle">
-     <HardcodedBarGraph/>
-    <input type="text" className="border h-1/2 p-4 w-1/3  px-4 py-2" placeholder="Search..." />
-  </div>
-     
-     
+      <div className="w-full flex justify-between mt-4 align-middle">
+        <HardcodedBarGraph />
+        <input
+          type="text"
+          className="border h-1/2 p-4 w-1/3  px-4 py-2"
+          placeholder="Search..."
+        />
+      </div>
 
       <div className="ml-72 mt-10 ">
         <table className="w-full">
@@ -66,16 +75,24 @@ const Page = () => {
               <th className="px-4 py-2">College Name</th>
               <th className="px-4 py-2">Number of Jobs</th>
               <th className="px-4 py-2">Number of Applicants</th>
-            
+
               <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {colleges &&
               colleges.map((college, index) => (
-                <CollegeCard key={index} college={college} />
+                <CollegeCard
+                  key={college.name}
+                  college={college}
+                  skill={skill}
+                  onSelect={handleSelectCollege}
+                />
               ))}
           </tbody>
+          <button onClick={() => console.log(selectedColleges)}>
+            Post Here
+          </button>
         </table>
       </div>
     </>
