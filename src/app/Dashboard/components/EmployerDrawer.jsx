@@ -22,7 +22,6 @@ const EmployerDrawer = () => {
                 <li className="py-1 flex items-center text-text-gray space-x-2"><FiBriefcase /><a href="/my-jobs" className=" ">My Jobs</a></li>
                 <li className="py-1 flex items-center text-text-gray space-x-2"><FiHeart /><a href="/saved-candidates" className=" ">Saved Candidates</a></li>
                 <li className="py-1 flex items-center text-text-gray space-x-2"><FiDollarSign /><a href="/plan-pricing" className=" ">Plan and Pricing</a></li>
-                <li className="py-1   flex items-center border border-purple-700 b rounded-full  text-text-gray -mr-2 space-x-2"><FaRobot className='ml-2' /><a href="/plan-pricing" className=" ">Ask AI</a></li>
 
                 <li className="py-1 flex items-center text-text-gray space-x-2"><FiSettings /><a href="/settings" className=" ">Settings</a></li>
                 <li className="mt-auto py-1 flex items-center space-x-2"><FiLogOut /><a href="/logout" className="text-red-500 ">Logout</a></li>

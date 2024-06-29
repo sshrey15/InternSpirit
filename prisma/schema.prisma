@@ -7,9 +7,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Competition {
+  id              String        @id @default(uuid())
+  name            String
+  description     String
+  
+  startDate       DateTime
+  endDate         DateTime
+  prize           Decimal
+  entryFee        Decimal
+  competitionType CompetitionType
+  employerId      String
+  employer        Employer       @relation(fields: [employerId], references: [id])
+  participants    Participant[]
+  applicant       Applicant[]
+  team            Team[]
+}
+
+enum CompetitionType {
+  INDIVIDUAL
+  TEAM
+}
+
+model Team {
+  id              String        @id @default(uuid())
+  name            String
+  competitionId   String
+  competition     Competition   @relation(fields: [competitionId], references: [id])
+  participants    Participant[]
+}
+
+model Participant {
+  id              String        @id @default(uuid())
+  name            String
+  competitionId   String
+  competition     Competition   @relation(fields: [competitionId], references: [id])
+  teamId          String?
+  team            Team?         @relation(fields: [teamId], references: [id])
+  applicantId     String
+  applicant       Applicant     @relation(fields: [applicantId], references: [id])
+}
+
+
 model PersonalInfo {
   id String @id @default(uuid()) // personalinfo
-
+  profileImage    String? // URL to profile image
   phone           String?
   address         String?
   resume          String? // This could be a URL to a hosted resume
@@ -20,9 +62,24 @@ model PersonalInfo {
   experienceYears Int // Years of experience
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+  
   //EXTERNAL MODEL
   applicantId     String
   applicant       Applicant @relation(fields: [applicantId], references: [id])
+}
+
+model Projects{
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  github      String?
+  demo        String?
+  media       String?
+  startDate   DateTime
+  endDate     DateTime
+  applicantId String
+  applicant   Applicant @relation(fields: [applicantId], references: [id])
+
 }
 
 model Education {
@@ -70,12 +127,28 @@ model Applicant {
   passwordHash String
   collegeId    String
   college      College @relation(fields: [collegeId], references: [id])
-  
+  competitions    Competition[]
   skills       Skills[]
   personalInfos PersonalInfo[]
   applications  JobApplication[]
-
+  projects        Projects[]
   educations Education[]
+  eliteGroups EliteGroup[]
+  roleId     String?
+  role       Role?    @relation(fields: [roleId], references: [id])
+  participant Participant[]
+}
+
+model Admin {
+  id           String      @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String      @unique
+  passwordHash String
+  eliteGroupId String
+  eliteGroup   EliteGroup  @relation(fields: [eliteGroupId], references: [id])
+  collegeId    String
+  college      College     @relation(fields: [collegeId], references: [id])
 }
 
 model College {
@@ -84,6 +157,8 @@ model College {
   location   String
   jobs       Job[]
   applicants Applicant[]
+  eliteGroups EliteGroup[]
+  admins     Admin[]
 }
 
 model Employer {
@@ -92,6 +167,7 @@ model Employer {
   email          String        @unique
   password       String
   companyId      String
+  competitions   Competition[]
   company        Company       @relation(fields: [companyId], references: [id])
   jobs           Job[]
   Plan           Plan?         @relation(fields: [planId], references: [id])
@@ -135,7 +211,7 @@ enum SubscriptionType {
 model Subscription {
   id        String           @id @default(uuid())
   price     Decimal
-  description String
+  description String?
   type      SubscriptionType
   createdAt DateTime         @default(now())
   duration  Int
@@ -168,4 +244,24 @@ model JobApplication {
   appliedAt   DateTime  @default(now())
   job         Job       @relation(fields: [jobId], references: [id])
   applicant   Applicant @relation(fields: [applicantId], references: [id])
+}
+
+model Role {
+  id           String      @id @default(uuid())
+  name         String
+  description  String
+  eliteGroupId String
+  eliteGroup   EliteGroup @relation(fields: [eliteGroupId], references: [id])
+  applicants   Applicant[]
+}
+
+model EliteGroup {
+  id           String    @id @default(uuid())
+  name         String
+  description  String
+  collegeId    String
+  college      College   @relation(fields: [collegeId], references: [id])
+  applicants   Applicant[]
+  roles        Role[]
+  admins       Admin[]
 }
