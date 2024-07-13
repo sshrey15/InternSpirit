@@ -26,7 +26,11 @@ export const POST = async (req, res) => {
       return NextResponse.json({ message: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ id: employer.id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({
+       id: employer.id ,
+       companyId: employer.companyId
+
+    }, process.env.JWT_SECRET, {
       expiresIn: "24h",
     });
 

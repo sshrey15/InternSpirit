@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaBriefcase, FaTrophy } from "react-icons/fa"; // Import suitable icons
 import Image from 'next/image';
+import Link from 'next/link';
 const ProfileHeader = ({employerName}) => {
   return (
     <div className="flex ml-72 flex-col justify-start p-4 bg-white rounded">
@@ -16,11 +17,17 @@ const ProfileHeader = ({employerName}) => {
         </div>
 
         <div className="flex gap-4">
+          
           <button className="gap-3 items-center rounded-full flex bg-blue-500 hover:bg-blue-700 text-white font-bold p-1 px-4 ">
             <FaTrophy /> Contest
           </button>
+          
           <button className="bg-green-500 hover:bg-green-700 text-white font-bold flex items-center gap-3 py-2 px-4 rounded-full">
-            <FaBriefcase />  Internship
+          
+            <FaBriefcase /> 
+            <Link href="/Dashboard/employer/forms">
+             Internship
+            </Link>
           </button>
         </div>
       </div>

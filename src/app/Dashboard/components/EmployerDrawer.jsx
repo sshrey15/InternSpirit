@@ -19,12 +19,14 @@ const EmployerDrawer = () => {
             <ul className="list-none p-4 space-y-2 flex flex-col  h-full">
              <Link href="/Dashboard/employer/profile">   <li className="py-1 flex items-center text-text-gray space-x-2"><FiUser /><h1 href="/Dashboard/employer/plan" className=" ">Employer Profile</h1></li></Link>
              <Link href="/Dashboard/employer/post"> <li className="py-1 flex items-center text-text-gray space-x-2"><FiPlus/><a href="/post-job" className=" ">Post a Job</a></li></Link>  
-                <li className="py-1 flex items-center text-text-gray space-x-2"><FiBriefcase /><a href="/my-jobs" className=" ">My Jobs</a></li>
+                <Link href="/Dashboard/employer/myjobs" className="py-1 flex items-center text-text-gray space-x-2"><FiBriefcase /><a href="/my-jobs" className=" ">My Jobs</a></Link>
                 <li className="py-1 flex items-center text-text-gray space-x-2"><FiHeart /><a href="/saved-candidates" className=" ">Saved Candidates</a></li>
                 <li className="py-1 flex items-center text-text-gray space-x-2"><FiDollarSign /><a href="/plan-pricing" className=" ">Plan and Pricing</a></li>
 
                 <li className="py-1 flex items-center text-text-gray space-x-2"><FiSettings /><a href="/settings" className=" ">Settings</a></li>
                 <li className="mt-auto py-1 flex items-center space-x-2"><FiLogOut /><a href="/logout" className="text-red-500 ">Logout</a></li>
+                <Link href="/Dashboard/employer/forms"> <li className="py-1 flex items-center text-text-gray space-x-2"><a href="/post-job" className=" "></a></li></Link>  
+
             </ul>
         </div>
     );

@@ -1,8 +1,13 @@
+"use client"
 import { useState, useEffect } from 'react';
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
 
 export const useAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    // On initial run, check if 'isLoggedIn' is stored in localStorage
+    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
+    return storedIsLoggedIn ? JSON.parse(storedIsLoggedIn) : false;
+  });
 
   useEffect(() => {
     const checkLoginStatus = () => {
@@ -14,6 +19,12 @@ export const useAuth = () => {
 
     checkLoginStatus();
   }, []);
+
+  useEffect(() => {
+    // Whenever 'isLoggedIn' changes, store it in localStorage
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
 
   const login = () => {
     setCookie(null, 'applicantCookie', 'true', {

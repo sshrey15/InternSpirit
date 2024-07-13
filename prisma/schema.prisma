@@ -1,4 +1,4 @@
-  generator client {
+generator client {
   provider = "prisma-client-js"
 }
 
@@ -8,17 +8,18 @@ datasource db {
 }
 
 model Competition {
-  id              String        @id @default(uuid())
+  id              String          @id @default(uuid())
   name            String
   description     String
-  
   startDate       DateTime
   endDate         DateTime
   prize           Decimal
   entryFee        Decimal
+  collegeId       String?
+  college         College?        @relation(fields: [collegeId], references: [id])
   competitionType CompetitionType
   employerId      String
-  employer        Employer       @relation(fields: [employerId], references: [id])
+  employer        Employer        @relation(fields: [employerId], references: [id])
   participants    Participant[]
   applicant       Applicant[]
   team            Team[]
@@ -30,27 +31,26 @@ enum CompetitionType {
 }
 
 model Team {
-  id              String        @id @default(uuid())
-  name            String
-  competitionId   String
-  competition     Competition   @relation(fields: [competitionId], references: [id])
-  participants    Participant[]
+  id            String        @id @default(uuid())
+  name          String
+  competitionId String
+  competition   Competition   @relation(fields: [competitionId], references: [id])
+  participants  Participant[]
 }
 
 model Participant {
-  id              String        @id @default(uuid())
-  name            String
-  competitionId   String
-  competition     Competition   @relation(fields: [competitionId], references: [id])
-  teamId          String?
-  team            Team?         @relation(fields: [teamId], references: [id])
-  applicantId     String
-  applicant       Applicant     @relation(fields: [applicantId], references: [id])
+  id            String      @id @default(uuid())
+  name          String
+  competitionId String
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  teamId        String?
+  team          Team?       @relation(fields: [teamId], references: [id])
+  applicantId   String
+  applicant     Applicant   @relation(fields: [applicantId], references: [id])
 }
 
-
 model PersonalInfo {
-  id String @id @default(uuid()) // personalinfo
+  id              String   @id @default(uuid()) // personalinfo
   profileImage    String? // URL to profile image
   phone           String?
   address         String?
@@ -60,15 +60,15 @@ model PersonalInfo {
   portfolio       String? // Portfolio website URL
   skills          String[] // Array of skills
   experienceYears Int // Years of experience
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
   //EXTERNAL MODEL
-  applicantId     String
-  applicant       Applicant @relation(fields: [applicantId], references: [id])
+  applicantId String
+  applicant   Applicant @relation(fields: [applicantId], references: [id])
 }
 
-model Projects{
+model Projects {
   id          String    @id @default(uuid())
   name        String
   description String
@@ -79,7 +79,6 @@ model Projects{
   endDate     DateTime
   applicantId String
   applicant   Applicant @relation(fields: [applicantId], references: [id])
-
 }
 
 model Education {
@@ -93,72 +92,73 @@ model Education {
 }
 
 model Quiz {
-  id        String    @id @default(uuid())
+  id        String     @id @default(uuid())
   name      String
   questions Question[]
   skills    Skills[]
 }
 
 model Question {
-  id          String   @id @default(uuid())
-  text        String
-  options     String   // Possible answers, stored as a comma-separated list
+  id            String @id @default(uuid())
+  text          String
+  options       String // Possible answers, stored as a comma-separated list
   correctAnswer String
-  quizId      String
-  quiz        Quiz     @relation(fields: [quizId], references: [id])
+  quizId        String
+  quiz          Quiz   @relation(fields: [quizId], references: [id])
 }
 
-model Skills{
-  id         String   @id @default(uuid())
-  name       String
-  assessment String
+model Skills {
+  id          String    @id @default(uuid())
+  name        String
+  assessment  String
   applicantId String
-  applicant  Applicant @relation(fields: [applicantId], references: [id])
-  quizId     String?
-  quiz       Quiz?     @relation(fields: [quizId], references: [id])
+  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  quizId      String?
+  quiz        Quiz?     @relation(fields: [quizId], references: [id])
 }
-
 
 model Applicant {
-  id           String  @id @default(uuid())
-  firstName    String
-  lastName     String
-  email        String  @unique
-  passwordHash String
-  collegeId    String
-  college      College @relation(fields: [collegeId], references: [id])
-  competitions    Competition[]
-  skills       Skills[]
+  id            String           @id @default(uuid())
+  firstName     String
+  lastName      String
+  email         String           @unique
+  passwordHash  String
+  collegeId     String
+  college       College          @relation(fields: [collegeId], references: [id])
+  competitions  Competition[]
+  skills        Skills[]
   personalInfos PersonalInfo[]
   applications  JobApplication[]
-  projects        Projects[]
-  educations Education[]
-  eliteGroups EliteGroup[]
-  roleId     String?
-  role       Role?    @relation(fields: [roleId], references: [id])
-  participant Participant[]
+  projects      Projects[]
+  educations    Education[]
+  eliteGroupId  String?
+  eliteGroup    EliteGroup?      @relation(fields: [eliteGroupId], references: [id])
+  roleId        String?
+  role          Role?            @relation(fields: [roleId], references: [id])
+  participant   Participant[]
 }
 
 model Admin {
-  id           String      @id @default(uuid())
+  id           String     @id @default(uuid())
   firstName    String
   lastName     String
-  email        String      @unique
+  email        String     @unique
   passwordHash String
   eliteGroupId String
-  eliteGroup   EliteGroup  @relation(fields: [eliteGroupId], references: [id])
+  eliteGroup   EliteGroup @relation(fields: [eliteGroupId], references: [id])
   collegeId    String
-  college      College     @relation(fields: [collegeId], references: [id])
+  college      College    @relation(fields: [collegeId], references: [id])
 }
 
 model College {
-  id         String      @id @default(uuid())
-  name       String
-  location   String
-  jobs       Job[]
-  applicants Applicant[]
-  eliteGroups EliteGroup[]
-  admins     Admin[]
+  id           String        @id @default(uuid())
+  name         String
+  location     String
+  jobs         Job[]
+  applicants   Applicant[]
+  eliteGroups  EliteGroup[]
+  admins       Admin[]
+  competitions Competition[]
 }
 
 model Employer {
@@ -209,20 +209,20 @@ enum SubscriptionType {
 }
 
 model Subscription {
-  id        String           @id @default(uuid())
-  price     Decimal
+  id          String           @id @default(uuid())
+  price       Decimal
   description String?
-  type      SubscriptionType
-  createdAt DateTime         @default(now())
-  duration  Int
-  updatedAt DateTime         @updatedAt
-  employers Employer[]
+  type        SubscriptionType
+  createdAt   DateTime         @default(now())
+  duration    Int
+  updatedAt   DateTime         @updatedAt
+  employers   Employer[]
 }
 
 model Job {
   id           String           @id @default(uuid())
   title        String
-  description  String 
+  description  String
   postedAt     DateTime         @default(now())
   expiresAt    DateTime
   companyId    String
@@ -250,18 +250,19 @@ model Role {
   id           String      @id @default(uuid())
   name         String
   description  String
-  eliteGroupId String
-  eliteGroup   EliteGroup @relation(fields: [eliteGroupId], references: [id])
   applicants   Applicant[]
-}
+  eliteGroupId String
+  eliteGroup   EliteGroup  @relation(fields: [eliteGroupId], references: [id])
+  
+  }
 
 model EliteGroup {
-  id           String    @id @default(uuid())
-  name         String
-  description  String
-  collegeId    String
-  college      College   @relation(fields: [collegeId], references: [id])
-  applicants   Applicant[]
-  roles        Role[]
-  admins       Admin[]
+  id          String      @id @default(uuid())
+  name        String
+  description String
+  collegeId   String
+  college     College     @relation(fields: [collegeId], references: [id])
+  applicants  Applicant[]
+  roles       Role[]
+  admins      Admin[]
 }

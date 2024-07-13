@@ -1,7 +1,6 @@
 "use client"
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import {parseCookies} from 'nookies'
 
 
 import { useAuthContext } from '@/context/AuthContext';
@@ -12,10 +11,10 @@ const AuthGuard = ({ children, redirect }) => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      console.log(isLoggedIn);
       router.push(redirect);
+      console.log(isLoggedIn);
     }
-  }, [isLoggedIn, redirect, router]);
+  }, [router,isLoggedIn, redirect, ]);
 
   return children;
 };

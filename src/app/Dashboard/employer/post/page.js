@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
 import CollegeCard from "../../components/CollegeCard";
 import HardcodedBarGraph from "../../components/BarGraph";
+import Link from "next/link";
 
 const Page = () => {
   const [colleges, setColleges] = useState(null);
@@ -91,7 +92,9 @@ const Page = () => {
               ))}
           </tbody>
           <button onClick={() => console.log(selectedColleges)}>
+            <Link href="/Dashboard/employer/forms">
             Post Here
+            </Link>
           </button>
         </table>
       </div>

@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import cookieParser from "cookie-parser";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
+import jwt from 'jsonwebtoken';
+import { parse } from 'cookie';
+import { NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
+import { cookies } from 'next/headers';
+
 
 const prisma = new PrismaClient();
 
 export const GET = async (req, res) => {
   try {
-   
     const jobs = await prisma.job.findMany({
       include: {
         college: true,
@@ -28,20 +28,68 @@ export const GET = async (req, res) => {
 //PUT, DELETE,
 
 export const POST = async (req) => {
-  const { title, description, skills, companyId, collegeId, type } =
-    await req.json();
+  const cookieStore = cookies();
+  const employerCookie = cookieStore.get("employerCookie").value;
+  console.log("employercookie: ",employerCookie);
+  let employerId;
+  let companyId;
   try {
-    const job = await prisma.job.create({
-      data: {
-        title,
-        description,
-        skills,
-        companyId,
-        collegeId,
-        type,
-      },
-    });
-    return NextResponse.json({ message: "success", job });
+    const decodedToken = jwt.verify(employerCookie, process.env.JWT_SECRET);
+    employerId = decodedToken.id;
+    companyId = decodedToken.companyId;
+  } catch (err) {
+    if (!employerCookie || typeof employerCookie !== 'string') {
+      console.log('Invalid or missing employerCookie:', employerCookie);
+      return NextResponse.json({ message: "Invalid or missing token" });
+    }
+  }
+
+  console.log(employerId, companyId);
+  const { title, description, expiresAt, skills, collegeId, type } =
+    await req.json();
+
+  try {
+    let colleges;
+    if (!collegeId) {
+      // If collegeIds is not provided, fetch all colleges
+      colleges = await prisma.college.findMany();
+    } else if (Array.isArray(collegeId)) {
+      // If collegeIds is an array, fetch those colleges
+      colleges = await prisma.college.findMany({
+        where: {
+          id: {
+            in: collegeId,
+          },
+        },
+      });
+    } else {
+      // If collegeIds is a single value, fetch that college
+      colleges = await prisma.college.findMany({
+        where: {
+          id: collegeId,
+        },
+      });
+    }
+
+    // Create a job for each college
+    const jobs = await Promise.all(
+      colleges.map(async (college) => {
+        return prisma.job.create({
+          data: {
+            title,
+            description,
+            skills,
+            expiresAt,
+            companyId,
+            collegeId: college.id,
+            type,
+            employerId,
+          },
+        });
+      })
+    );
+
+    return NextResponse.json({ message: "success", jobs });
   } catch (err) {
     console.log(err);
     return NextResponse.json({ message: "error", err: err.message });

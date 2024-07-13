@@ -6,10 +6,6 @@ import { cookies } from "next/headers";
 const prisma = new PrismaClient();
 export const GET = async (req, { params }) => {
     const collegeId = params.collegeId;
-
-  
-
-  
   try {
     const cookieStore = cookies();
     const token = cookieStore.get("applicantCookie").value;
