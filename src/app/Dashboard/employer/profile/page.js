@@ -13,7 +13,7 @@ const ParentComponent = () => {
   const [isSubscribed, setIsSubscribed] = useState(false); // Add this line
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/employer", { cache: "force-cache" })
+    fetch("http://localhost:3000/api/employer")
       .then((response) => response.json())
       .then((data) => {
         setEmployerName(data.employer.name);

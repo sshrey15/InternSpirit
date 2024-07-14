@@ -31,9 +31,11 @@ export const GET = async (req, res) => {
         jobs: true,
         applicants: {
           include:{
-            skills: true
+            skills: true,
+            
           }
-        }
+        },
+        competitions: true,
       },
     });
     return NextResponse.json({ message: "success", colleges });

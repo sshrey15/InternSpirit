@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
+import { formatDistanceToNow } from 'date-fns';
+
 
 const prisma = new PrismaClient()
 
@@ -20,7 +22,7 @@ export const GET = async (req) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const employerId = decoded.id;
 
-        const employer = await prisma.employer.findUnique({
+        let employer = await prisma.employer.findUnique({
             where: {
                 id: employerId
             },
@@ -32,12 +34,20 @@ export const GET = async (req) => {
                 jobs: {
                     include:{
                         applications: true
-                    
                     }
                 }
             }
         });
         console.log(employer)
+
+        employer = {
+            ...employer,
+            jobs: employer.jobs.map(job => ({
+                ...job,
+                postedAt: formatDistanceToNow(new Date(job.postedAt), { addSuffix: true }),
+                expiresAt: formatDistanceToNow(new Date(job.expiresAt), { addSuffix: true }),
+            })),
+        };
 
         const companyId = employer.companyId
         console.log(companyId)
@@ -48,10 +58,6 @@ export const GET = async (req) => {
             }
         })
 
-       
-
-
-  
         return NextResponse.json({ message: "success", employer, company });
     } catch (err) {
         return NextResponse.json({ message: "error", err: err.message });

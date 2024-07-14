@@ -1,10 +1,10 @@
 {
     "colleges": [
-      { "value": "college1", "label": "Goa Engineering College" },
-      { "value": "college2", "label": "Padre Conceicao College Of Engineering" },
-      { "value": "college3", "label": "Don Bosco College of Engineering" },
-      { "value": "college4", "label": "Rayeshwar Institute of Technology" },
-      { "value": "college5", "label": "Shree Damodar College of Commerce and Economics" }
+      { "value": "123", "label": "Goa Engineering College" },
+      { "value": "321", "label": "Padre Conceicao College Of Engineering" },
+      { "value": "231", "label": "Don Bosco College of Engineering" },
+      { "value": "132", "label": "Rayeshwar Institute of Technology" },
+      { "value": "232 ", "label": "Agnel Institute of Technology" }
     ],
     "skills": [
         { "value": "skill1", "label": "React" },

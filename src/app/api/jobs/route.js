@@ -3,6 +3,8 @@ import { parse } from 'cookie';
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { cookies } from 'next/headers';
+import { formatDistanceToNow } from 'date-fns';
+
 
 
 const prisma = new PrismaClient();
@@ -19,7 +21,13 @@ export const GET = async (req, res) => {
       },
     });
 
-    return NextResponse.json({ message: "suceess", jobs });
+    const jobsWithDatesInWords = jobs.map(job => ({
+      ...job,
+      postedAt: formatDistanceToNow(new Date(job.postedAt), { addSuffix: true }),
+      expiresAt: formatDistanceToNow(new Date(job.expiresAt), { addSuffix: true }),
+    }));
+
+    return NextResponse.json({ message: "success", jobs: jobsWithDatesInWords });
   } catch (err) {
     console.log(err);
     return NextResponse.json({ message: "error", err: err.message });
@@ -50,6 +58,7 @@ export const POST = async (req) => {
 
   try {
     let colleges;
+    console.log(collegeId);
     if (!collegeId) {
       // If collegeIds is not provided, fetch all colleges
       colleges = await prisma.college.findMany();
@@ -61,7 +70,9 @@ export const POST = async (req) => {
             in: collegeId,
           },
         },
+        
       });
+      console.log(colleges);
     } else {
       // If collegeIds is a single value, fetch that college
       colleges = await prisma.college.findMany({
