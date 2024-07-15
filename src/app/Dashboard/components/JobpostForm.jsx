@@ -102,7 +102,7 @@ const JobpostForm = () => {
       onSubmit={handleSubmit}
       className="space-y-4 p-4  ml-72 bg-gray-100 m-2"
     >
-      <h1 className="text-2xl font-bold text-center mb-4">Internship Form</h1>
+      <h1 className="text-2xl font-bold text-center mb-4">Post Internships </h1>
       <input
         className="w-full p-2 border border-gray-300 rounded"
         placeholder="Internship Title"
@@ -117,6 +117,7 @@ const JobpostForm = () => {
           name="description"
           value={formData.description}
           onChange={handleChange}
+          rows={5 }
         ></textarea>
         <button className="absolute right-2 bottom-4 bg-purple-600 text-white rounded px-2 py-1 flex items-center">
           <AiFillRobot className="mr-1" />

@@ -4,11 +4,16 @@ import Select from "react-select";
 import options from "../../data/options";
 import { AiFillRobot } from "react-icons/ai";
 import Loading from "@/app/loading";
-import { set } from "lodash";
+import competitionDescription from "../../data/competitionDescription";
+import { 
+  useRouter
+ } from "next/navigation"
 
 function CompetitionForm() {
+  const router = useRouter();
   const [selectedColleges, setSelectedColleges] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFree, setIsFree] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -36,7 +41,7 @@ function CompetitionForm() {
 
   const handleChange = (e) => {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
-  
+    
     setFormData({
       ...formData,
       [e.target.name]: value,
@@ -50,6 +55,15 @@ function CompetitionForm() {
 
 
   const handleCollegeChange = (selectedOptions) => {
+    let collegeIds;
+    if (selectedOptions.some(option => option.value === 'all')) {
+      // If 'all' is selected, get the IDs of all colleges
+      collegeIds = allColleges.map(college => college.id);
+    } else {
+      // Otherwise, get the IDs of the selected colleges
+      collegeIds = selectedOptions.map(option => option.value);
+    }
+
     setSelectedColleges(selectedOptions);
     setFormData({
       ...formData,
@@ -64,6 +78,7 @@ function CompetitionForm() {
     try {
       const data = await postData("/api/competition", {
         ...formData,
+        entryFee: isFree ? 0 : formData.entryFee,
         startDate: `${formData.startDate}T00:00:00Z`,
         endDate: `${formData.endDate}T00:00:00Z`,
         collegeId: selectedColleges.map((option) => option.value),
@@ -84,6 +99,7 @@ function CompetitionForm() {
     } finally {
       setIsLoading(false);
       console.log("submitted");
+      router.push("/Dashboard/employer/addcontest/successContest");
     }
   };
 
@@ -100,7 +116,7 @@ function CompetitionForm() {
       onSubmit={handleSubmit}
       className="space-y-4 p-4  ml-72 bg-gray-100 m-2"
     >
-      <h1 className="text-2xl font-bold text-center mb-4">Competition Form</h1>
+      <h1 className="text-2xl font-bold text-center mb-4">Organise Contests </h1>
       <input
         type="text"
         placeholder="Name"
@@ -111,11 +127,12 @@ function CompetitionForm() {
       />
       <div className="relative">
         <textarea
-          className="w-full p-2 border border-gray-300 rounded"
+          className="w-full  p-2 border border-gray-300 rounded"
           placeholder="Description"
           name="description"
           value={formData.description}
           onChange={handleChange}
+          rows={8}
         ></textarea>
         <button className="absolute right-2 bottom-4 bg-purple-600 text-white rounded px-2 py-1 flex items-center">
           <AiFillRobot className="mr-1" />
@@ -155,23 +172,23 @@ function CompetitionForm() {
         />
         <span>{formData.prize}</span>
       </label>
-      {/* <label className="flex items-center text-gray-500">
-        <input
-          type="checkbox"
-          name="isFree"
-          checked={formData.isFree}
-          onChange={handleChange}
-          className="mr-2 leading-tight form-checkbox h-5 w-5 text-blue-500"
-        />
-        <span className="text-sm">Is the contest free?</span>
-      </label> */}
+      <label className="flex items-center text-gray-500">
+  <input
+    type="checkbox"
+    name="isFree"
+    checked={isFree}
+    onChange={e => setIsFree(e.target.checked)}
+    className="mr-2 leading-tight form-checkbox h-5 w-5 text-blue-500"
+  />
+  <span className="text-sm">Is the contest free?</span>
+</label>
       <input
         type="number"
         placeholder="Entry Fee"
         name="entryFee"
-        value={formData.isFree ? 0 : formData.entryFee}
+        value={isFree ? 0 : formData.entryFee}
         onChange={handleChange}
-        disabled={formData.isFree}
+        disabled={isFree}
         className="w-full p-2 border border-gray-300 rounded"
       />
       <select

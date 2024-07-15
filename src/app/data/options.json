@@ -4,7 +4,7 @@
       { "value": "321", "label": "Padre Conceicao College Of Engineering" },
       { "value": "231", "label": "Don Bosco College of Engineering" },
       { "value": "132", "label": "Rayeshwar Institute of Technology" },
-      { "value": "232 ", "label": "Agnel Institute of Technology" }
+      { "value": "232", "label": "Agnel Institute of Technology" }
     ],
     "skills": [
         { "value": "skill1", "label": "React" },

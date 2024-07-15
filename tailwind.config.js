@@ -21,7 +21,11 @@ module.exports = {
       colors: {
         'custom-gray': '#F1F2F4',
         'hero-bg': '#0A65CC',
-        'text-gray': '#5E6670'
+        'text-gray': '#5E6670',
+        'gold': '#FFD700',
+        'Dark-gold': '#FFD800',
+        
+
       },
       rotate: {
         '270': '270deg',

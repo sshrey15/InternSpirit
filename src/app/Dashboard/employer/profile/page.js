@@ -5,10 +5,12 @@ import Loading from "../../../loading";
 import JobsTable from "../../components/JobsTable";
 import Map from "../../components/Map";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import TrackContest from "../../components/TrackContest";
 
 const ParentComponent = () => {
   const [employerName, setEmployerName] = useState("");
   const [jobs, setJobs] = useState([]);
+  const [competitions, setCompetitions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false); // Add this line
 
@@ -18,6 +20,7 @@ const ParentComponent = () => {
       .then((data) => {
         setEmployerName(data.employer.name);
         setJobs(data.employer.jobs);
+        setCompetitions(data.employer.competitions);  
         setIsSubscribed(data.employer.isSubscribed); // Set the subscription status
         setIsLoading(false);
       })
@@ -70,7 +73,10 @@ const ParentComponent = () => {
             </div>
           )}
         </TabPanel>
-        <TabPanel className="p-4">{/* Content for Tab 2 */}</TabPanel>
+        <TabPanel className=" -mt-4">
+          
+          <TrackContest competitions={competitions}/>
+        </TabPanel>
       </Tabs>
     </>
   );

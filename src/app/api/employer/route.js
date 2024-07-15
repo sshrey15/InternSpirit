@@ -31,11 +31,9 @@ export const GET = async (req) => {
                 name: true,
                 email: true,
                 companyId: true,
-                jobs: {
-                    include:{
-                        applications: true
-                    }
-                }
+                jobs: true,
+                competitions: true,
+                
             }
         });
         console.log(employer)
