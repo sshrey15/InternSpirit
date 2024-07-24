@@ -33,3 +33,4 @@ export async function PUT(req, {params}){
         return NextResponse.json({message:"error",err:err.message})
     }
 }
+

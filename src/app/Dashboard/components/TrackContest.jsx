@@ -1,7 +1,16 @@
 "use client";
 import React, { useState } from "react";
+import Image from "next/image";
 
 const itemsPerPage = 6;
+
+export const collegeIdMap = {
+  123: "gec.png",
+  321: "pcce.png",
+  231: "dbce.png",
+  132: "rit.jpg",
+  232: "aitd.png",
+};
 
 const TrackContest = ({ competitions }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,8 +38,9 @@ const TrackContest = ({ competitions }) => {
             const startDate = new Date(comp.startDate);
             const endDate = new Date(comp.endDate);
             // Calculate the total duration of the contest and how much of it has passed
-            const totalDuration = new Date(comp.endDate) - new Date(comp.startDate);
-            let passedDuration 
+            const totalDuration =
+              new Date(comp.endDate) - new Date(comp.startDate);
+            let passedDuration;
 
             if (currentDate < startDate) {
               passedDuration = 0;
@@ -57,11 +67,20 @@ const TrackContest = ({ competitions }) => {
                       • LIVE
                     </span>
                   )}
-                  <div className="mb-4">
-                    <h2 className="font-bold text-xl mb-2">{comp.name}</h2>
-                    <p className="text-gray-700 text-base">
-                      {comp.description}
-                    </p>
+
+                  <div className="mb-4 flex gap-2">
+                    <Image
+                      src={`/logos/${collegeIdMap[comp.collegeId]}`}
+                      width={70}
+                      height={70}
+                      alt="college logo"
+                    />
+                    <div>
+                      <h2 className="font-bold text-xl mb-2">{comp.name}</h2>
+                      <p className="text-gray-700 text-base">
+                        {comp.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div className="flex justify-between items-end border-t pt-4">

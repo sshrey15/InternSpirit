@@ -18,6 +18,9 @@ const JobpostForm = () => {
     type: "", // renamed from jobType to type
   });
 
+
+  
+
   const postData = async (url = "/api/jobs", data = {}) => {
     setIsLoading(true);
     console.log(data);
